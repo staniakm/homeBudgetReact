@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import NavigationPanel from './navigation/NavigationPanel'
 
 class App extends Component {
+
+  state = {
+    isLoading: false,
+    shoppings: ""
+  }
+
+   onItemClick= (item)=> {
+      this.props.history.push(`/list/`+item.id)
+   }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+          <h1>Budżet domowy</h1>
+              <NavigationPanel/>
+                <div className="content">
+                  {this.props.children}
+                </div>
       </div>
     );
   }
