@@ -12,6 +12,8 @@ class Shop extends Component {
         <thead>
         <tr className="oneRow">
             <th scope="col">Nazwa</th>
+            <th scope="col">Wydane w tym miesiącu</th>
+            <th scope="col">Wydane w tym roku</th>
         </tr>
         </thead>
     );
@@ -19,8 +21,10 @@ class Shop extends Component {
     TableBody = () => (
         <tbody>
         {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.shopId} onClick={() => this.onShopClick(item)}>
-                    <td>{item.name}</td>
+                <tr className="oneRow" key={item.shopId} >
+                    <td onClick={() => this.onShopClick(item)}>{item.name}</td>
+                    <td onClick={() => this.onShopMonthSpendClick(item)}>{item.monthSum}</td>
+                    <td onClick={() => this.onShopYearSpendClick(item)}>{item.yearSum}</td>
                 </tr>
             )
         )}
@@ -29,6 +33,14 @@ class Shop extends Component {
 
     onShopClick = (shop) => {
         console.log(shop)
+    }
+
+    onShopMonthSpendClick = (shop) => {
+        this.props.history.push(`/shop/${shop.shopId}/month`)
+    }
+    
+    onShopYearSpendClick = (shop) => {
+        console.log(shop.yearSum)
     }
 
     componentDidMount() {

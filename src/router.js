@@ -9,6 +9,7 @@ import Category from './SPA/Category/Category';
 import CategoryDetails from './SPA/Category/CategoryDetails'
 import ItemDetails from './SPA/ItemDetails'
 import Shop from './SPA/Shop/Shop'
+import ShopItems from './SPA/Shop/ShopItems'
 
 export const Router = () => (
     <BrowserRouter>
@@ -27,8 +28,10 @@ export const Router = () => (
                     name="categoryDetails" />
                 <Route exact path={"/item/:id"}
                     render={(props) => <ItemDetails id={props.match.params.id} />}
-                    name="itemDetails" 
-                    />
+                    name="itemDetails"/>
+                <Route exact path={"/shop/:id/month"}
+                    render={(props) => <ShopItems id={props.match.params.id} />}
+                    name="shopItems"/>
             </App>
         </Switch>
 
