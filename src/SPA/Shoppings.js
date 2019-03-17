@@ -9,7 +9,7 @@ class Shoppings extends Component {
 
     TableHeader = () => (
         <thead>
-        <tr>
+        <tr className="oneRow">
             <th scope="col">Sklep</th>
             <th scope="col">Data</th>
             <th scope="col">Cena</th>

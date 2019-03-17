@@ -7,6 +7,7 @@ const NavigationPanel = () => {
             <li><NavLink exact to="/">Home</NavLink></li>
             <li><NavLink to="/stuff">Stuff</NavLink></li>
             <li><NavLink to="/shopping">Paragony</NavLink></li>
+            <li><NavLink to="/category">Kategorie</NavLink></li>
         </ul>
     )
 }
