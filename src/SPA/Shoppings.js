@@ -20,7 +20,7 @@ class Shoppings extends Component {
     TableBody = () => (
         <tbody>
         {this.state.isLoaded && this.state.shoppingList.map(item => (
-                <tr className="oneRow" key={item.id} onClick={() => this.onItemClick(item)}>
+                <tr className="oneRow" key={item.listId} onClick={() => this.onItemClick(item)}>
                     <td>{item.name}</td>
                     <td>{item.date}</td>
                     <td>{item.price} zł</td>
@@ -32,14 +32,15 @@ class Shoppings extends Component {
 
 
     onItemClick = (item) => {
-        this.props.history.push(`/shopping/`+ item.id)
+        // this.props.history.push(item._links.self.href.replace(BASE_URL, ""))
+        this.props.history.push(`/shopping/`+ item.listId)
     }
 
     componentDidMount() {
         fetch(BASE_URL+"shopping")
         .then(response => response.json())
         .then(data => this.setState({
-            shoppingList: data ,
+            shoppingList: data,
             isLoaded:true
         }))
     }

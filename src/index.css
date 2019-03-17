@@ -59,5 +59,6 @@ ul.header li a {
 
 .oneRow {
   border: solid 1px black;
-  text-align: left
+  text-align: left;
+  cursor: pointer;
 }

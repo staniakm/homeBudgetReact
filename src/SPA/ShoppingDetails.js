@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {BASE_URL} from '../navigation/ulrs'
+import {withRouter} from 'react-router'
 
 class ShoppingDetails extends Component {
     state = {
@@ -22,7 +23,7 @@ class ShoppingDetails extends Component {
     TableBody = () => (
         <tbody>
         {this.state.isLoaded && this.state.shoppingDetails.map(item => (
-                <tr className="oneRow" key={item.id}>
+                <tr className="oneRow" key={item.id} onClick={() => this.itemDetails(item)}>
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
                     <td>{item.unitPrice} zł</td>
@@ -43,6 +44,9 @@ class ShoppingDetails extends Component {
             }))
     };
 
+    itemDetails = (item) =>{
+        this.props.history.push(`/item/`+item.id)
+    }
 
     
     render() {
@@ -59,4 +63,4 @@ class ShoppingDetails extends Component {
     }
 }
 
-export default ShoppingDetails
+export default withRouter( ShoppingDetails)

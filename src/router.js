@@ -5,8 +5,10 @@ import Home from './SPA/Home'
 import Stuff from './SPA/Stuff'
 import Shoppings from './SPA/Shoppings'
 import ShoppingDetails from './SPA/ShoppingDetails'
-import Category from './SPA/Category';
-import CategoryDetails from './SPA/CategoryDetails'
+import Category from './SPA/Category/Category';
+import CategoryDetails from './SPA/Category/CategoryDetails'
+import ItemDetails from './SPA/ItemDetails'
+import Shop from './SPA/Shop/Shop'
 
 export const Router = () => (
     <BrowserRouter>
@@ -15,13 +17,18 @@ export const Router = () => (
                 <Route exact path={"/"} component={Home} />
                 <Route exact path={"/stuff"} component={Stuff} />
                 <Route exact path={"/shopping"} component={Shoppings} />
+                <Route exact path={"/category"} component={Category} />
+                <Route exact path={"/shop"} component={Shop}/>
                 <Route exact path={"/shopping/:id"}
                     render={(props) => <ShoppingDetails id={props.match.params.id} />}
                     name="shoppingDetails" />
-                <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/category/:id"}
                     render={(props) => <CategoryDetails id={props.match.params.id} />}
                     name="categoryDetails" />
+                <Route exact path={"/item/:id"}
+                    render={(props) => <ItemDetails id={props.match.params.id} />}
+                    name="itemDetails" 
+                    />
             </App>
         </Switch>
 
