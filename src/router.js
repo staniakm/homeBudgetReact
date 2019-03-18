@@ -32,6 +32,9 @@ export const Router = () => (
                 <Route exact path={"/shop/:id/month"}
                     render={(props) => <ShopItems id={props.match.params.id} />}
                     name="shopItems"/>
+                    <Route exact path={"/shop/:id/year"}
+                    render={(props) => <ShopItems id={props.match.params.id} />}
+                    name="shopItems"/>
             </App>
         </Switch>
 

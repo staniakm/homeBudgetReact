@@ -40,7 +40,7 @@ class Shop extends Component {
     }
     
     onShopYearSpendClick = (shop) => {
-        console.log(shop.yearSum)
+        this.props.history.push(`/shop/${shop.shopId}/year`)
     }
 
     componentDidMount() {

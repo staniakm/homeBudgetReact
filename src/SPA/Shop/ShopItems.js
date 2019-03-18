@@ -42,8 +42,8 @@ class ShopItems extends Component {
     }
 
     componentDidMount(){
-        const id = this.props.id
-        fetch(`${BASE_URL}shop/${id}/month`)
+        const path =this.props.location.pathname 
+        fetch(`${BASE_URL}${path}`)
         .then(response => response.json())
         .then(data => this.setState({
             data: data,
