@@ -9,7 +9,7 @@ class Charts extends React.Component {
         isLoaded: false
     }
     columns =
-        [["Task", "Hours per Day"]]
+        [["Kategoria", "Suma"]]
         ;
     charities = [...this.columns];
 
@@ -26,9 +26,9 @@ class Charts extends React.Component {
     }
 
     options = {
-        title: "My Daily Activities",
+        title: "Podsumowanie miesiąca",
         pieHole: 0.3,
-        is3D: true
+        is3D: false
     };
 
     render() {
