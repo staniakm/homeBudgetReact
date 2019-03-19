@@ -6,21 +6,20 @@ import { Chart } from "react-google-charts";
 class Charts extends React.Component {
 
     state = {
-        isLoaded: false
+        isLoaded: false,
+        data:[]
     }
-    columns =
-        [["Kategoria", "Suma"]]
-        ;
-    charities = [...this.columns];
+
+    chartData = [["Kategoria", "Suma"]];
 
     componentDidMount() {
         fetch("http://localhost:8080/api/shopping/info")
             .then(response => response.json())
             .then(data => (data.map(obj => Object.values(obj)).map(item => {
-                return this.charities.push(item)
+                return this.chartData.push(item)
             })))
             .then(this.setState({
-                data: this.charities,
+                data: this.chartData,
                 isLoaded: true
             }))
     }
