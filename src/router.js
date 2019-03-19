@@ -10,12 +10,14 @@ import CategoryDetails from './SPA/Category/CategoryDetails'
 import ItemDetails from './SPA/ItemDetails'
 import Shop from './SPA/Shop/Shop'
 import ShopItems from './SPA/Shop/ShopItems'
+import Charts from './SPA/Charts'
 
 export const Router = () => (
     <BrowserRouter>
         <Switch>
             <App>
                 <Route exact path={"/"} component={Home} />
+                <Route exact path={"/charts"} component={Charts} />
                 <Route exact path={"/stuff"} component={Stuff} />
                 <Route exact path={"/shopping"} component={Shoppings} />
                 <Route exact path={"/category"} component={Category} />

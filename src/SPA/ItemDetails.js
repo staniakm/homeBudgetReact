@@ -1,8 +1,15 @@
 import React, {Component} from 'react'
-// import {BASE_URL} from '../navigation/ulrs'
+import {BASE_URL} from '../navigation/ulrs'
 import {withRouter} from 'react-router'
 
 class ItemDetails extends Component {
+
+componentDidMount(){
+    const path = this.props.location.pathname
+    fetch(BASE_URL+path)
+    .then(response => response.json)
+    .then(data => console.log(data))
+}
 
     render() {
         return (
