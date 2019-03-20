@@ -10,38 +10,38 @@ class Charts extends React.Component {
         data:[]
     }
 
-    chartData = [["Kategoria", "Suma"]];
-
     componentDidMount() {
         fetch("http://localhost:8080/api/shopping/info")
             .then(response => response.json())
-            .then(data => (data.map(obj => Object.values(obj)).map(item => {
-                return this.chartData.push(item)
-            })))
-            .then(this.setState({
-                data: this.chartData,
-                isLoaded: true
-            }))
+            .then(data => (data.map(obj => Object.values(obj))))
+            .then(chartData => {
+                const data = [["kategoria","suma"]].concat(chartData);
+                this.setState({
+                    data,
+                    isLoaded:true
+                })
+            })
     }
 
-    options = {
-        title: "Podsumowanie miesiąca",
-        pieHole: 0.3,
-        is3D: false
-    };
-
     render() {
+        const {isLoaded, data} = this.state
+        const options = {
+            title: "Podsumowanie miesiąca",
+            pieHole: 0.3,
+            is3D: false
+        };
+
         return (
             <div>
-                <h1>Charts</h1>
-                {this.state.isLoaded &&
+                {isLoaded &&
                     <Chart
                         chartType="PieChart"
                         width="100%"
                         height="400px"
-                        data={this.state.data}
-                        options={this.options}
-                    />}
+                        data={data}
+                        options={options}
+                    />
+}
             </div>
         )
     }
