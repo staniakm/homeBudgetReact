@@ -5,7 +5,8 @@ class Charts extends React.Component {
 
     state = {
         isLoaded: false,
-        data: []
+        data: [],
+        previous: []
     }
 
     componentDidMount() {
@@ -15,16 +16,32 @@ class Charts extends React.Component {
             .then(chartData => {
                 const data = [["kategoria", "suma"]].concat(chartData);
                 this.setState({
-                    data,
+                    data
+                })
+            })
+
+            fetch("http://localhost:8080/api/chart/previousMonth")
+            .then(response => response.json())
+            .then(data => (data.map(obj => Object.values(obj))))
+            .then(chartData => {
+                const previous = [["kategoria", "suma"]].concat(chartData);
+                this.setState({
+                    previous,
                     isLoaded: true
                 })
             })
     }
 
     render() {
-        const { isLoaded, data } = this.state
-        const options = {
-            title: "Podsumowanie miesiąca",
+        const { isLoaded, data, previous } = this.state
+        const optionsCurrent = {
+            title: "Obecny miesiąc",
+            pieHole: 0.3,
+            is3D: false
+        };
+
+        const optionsPrevious = {
+            title: "Poprzedni miesiąc",
             pieHole: 0.3,
             is3D: false
         };
@@ -32,13 +49,22 @@ class Charts extends React.Component {
         return (
             <div>
                 {isLoaded &&
+                <div className="rowC">
                     <Chart
                         chartType="PieChart"
-                        width="100%"
-                        height="400px"
-                        data={data}
-                        options={options}
+                        width="50%"
+                        height="500px"
+                        data={previous}
+                        options={optionsPrevious}
                     />
+                    <Chart
+                        chartType="PieChart"
+                        width="50%"
+                        height="500px"
+                        data={data}
+                        options={optionsCurrent}
+                    />
+                    </div>
                 }
             </div>
         )

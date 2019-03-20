@@ -8,7 +8,7 @@ const NavigationPanel = () => {
             <li><NavLink to="/shopping">Paragony</NavLink></li>
             <li><NavLink to="/category">Kategorie</NavLink></li>
             <li><NavLink to="/shop">Sklepy</NavLink></li>
-            <li><NavLink to="/charts">Charts</NavLink></li>
+            <li><NavLink to="/charts">Wykresy</NavLink></li>
         </ul>
     )
 }
