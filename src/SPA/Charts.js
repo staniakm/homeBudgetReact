@@ -1,30 +1,28 @@
 import React from 'react'
 import { Chart } from "react-google-charts";
 
-
-
 class Charts extends React.Component {
 
     state = {
         isLoaded: false,
-        data:[]
+        data: []
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/api/shopping/info")
+        fetch("http://localhost:8080/api/chart/currentMonth")
             .then(response => response.json())
             .then(data => (data.map(obj => Object.values(obj))))
             .then(chartData => {
-                const data = [["kategoria","suma"]].concat(chartData);
+                const data = [["kategoria", "suma"]].concat(chartData);
                 this.setState({
                     data,
-                    isLoaded:true
+                    isLoaded: true
                 })
             })
     }
 
     render() {
-        const {isLoaded, data} = this.state
+        const { isLoaded, data } = this.state
         const options = {
             title: "Podsumowanie miesiąca",
             pieHole: 0.3,
@@ -41,7 +39,7 @@ class Charts extends React.Component {
                         data={data}
                         options={options}
                     />
-}
+                }
             </div>
         )
     }
