@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import App from './App'
 import Home from './SPA/Home'
-import Stuff from './SPA/Stuff'
 import Shoppings from './SPA/Shoppings'
 import ShoppingDetails from './SPA/ShoppingDetails'
 import Category from './SPA/Category/Category';
@@ -18,7 +17,6 @@ export const Router = () => (
             <App>
                 <Route exact path={"/"} component={Home} />
                 <Route exact path={"/charts"} component={Charts} />
-                <Route exact path={"/stuff"} component={Stuff} />
                 <Route exact path={"/shopping"} component={Shoppings} />
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>

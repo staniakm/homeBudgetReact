@@ -5,7 +5,7 @@ import {withRouter} from 'react-router'
 class ShoppingDetails extends Component {
     state = {
         isLoaded: false,
-        shoppingDetails: []
+        data: []
     }
 
     TableHeader = () => (
@@ -22,7 +22,7 @@ class ShoppingDetails extends Component {
 
     TableBody = () => (
         <tbody>
-        {this.state.isLoaded && this.state.shoppingDetails.map(item => (
+        {this.state.isLoaded && this.state.data.map(item => (
                 <tr className="oneRow" key={item.id} onClick={() => this.itemDetails(item)}>
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
@@ -36,10 +36,10 @@ class ShoppingDetails extends Component {
     );
 
     componentDidMount() {
-        fetch(BASE_URL + "shopping/" + this.props.id)
+        fetch(`${BASE_URL}shopping/${this.props.id}`)
             .then(response => response.json())
             .then(data => this.setState({
-                shoppingDetails: data,
+                data,
                 isLoaded: true
             }))
     };
@@ -57,7 +57,6 @@ class ShoppingDetails extends Component {
                  <this.TableHeader/>
                  <this.TableBody />
                 </table>
-
             </div>
         )
     }

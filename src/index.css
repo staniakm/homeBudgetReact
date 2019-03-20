@@ -63,4 +63,17 @@ ul.header li a {
   cursor: pointer;
 }
 
-.rowC{display:flex; flex-direction:row;}
+.rowC{display:flex; flex-direction:row; align-items: center}
+
+.button {
+  height: 50%;
+  display: inline-flex;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}

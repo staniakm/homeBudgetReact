@@ -8,7 +8,6 @@ componentDidMount(){
     const path = this.props.location.pathname
     fetch(BASE_URL+path)
     .then(response => response.json)
-    .then(data => console.log(data))
 }
 
     render() {
