@@ -1,18 +1,25 @@
 import React from 'react'
-import { Chart } from "react-google-charts";
+import DrawChart from './ChartDraw'
 
-class Charts extends React.Component {
-
+class MonthSpendingChart extends React.Component {
+    month = {
+        prevoius: "http://localhost:8080/api/chart/previousMonth",
+        next: "http://localhost:8080/api/chart/currentMonth"
+    }
     state = {
         isLoaded: false,
         data: [],
         previous: []
     }
 
+    getApiData = async (ulr) => {
+        const response = await fetch(ulr);
+        const data = await response.json();
+        return (data.map(obj => Object.values(obj)));
+    }
+
     componentDidMount() {
-        fetch("http://localhost:8080/api/chart/currentMonth")
-            .then(response => response.json())
-            .then(data => (data.map(obj => Object.values(obj))))
+        this.getApiData(this.month.next)
             .then(chartData => {
                 const data = [["kategoria", "suma"]].concat(chartData);
                 this.setState({
@@ -20,9 +27,7 @@ class Charts extends React.Component {
                 })
             })
 
-            fetch("http://localhost:8080/api/chart/previousMonth")
-            .then(response => response.json())
-            .then(data => (data.map(obj => Object.values(obj))))
+        this.getApiData(this.month.prevoius)
             .then(chartData => {
                 const previous = [["kategoria", "suma"]].concat(chartData);
                 this.setState({
@@ -49,21 +54,9 @@ class Charts extends React.Component {
         return (
             <div>
                 {isLoaded &&
-                <div className="rowC">
-                    <Chart
-                        chartType="PieChart"
-                        width="50%"
-                        height="500px"
-                        data={previous}
-                        options={optionsPrevious}
-                    />
-                    <Chart
-                        chartType="PieChart"
-                        width="50%"
-                        height="500px"
-                        data={data}
-                        options={optionsCurrent}
-                    />
+                    <div className="rowC">
+                        <DrawChart options={optionsPrevious} data={previous} />
+                        <DrawChart options={optionsCurrent} data={data} />
                     </div>
                 }
             </div>
@@ -71,4 +64,4 @@ class Charts extends React.Component {
     }
 }
 
-export default Charts
+export default MonthSpendingChart

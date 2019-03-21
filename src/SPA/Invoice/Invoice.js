@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../navigation/ulrs'
+import * as url from '../../navigation/ulrs'
 
-class Shoppings extends Component {
+class Invoice extends Component {
     state = {
         isLoaded: false,
         month: 0,
         data: []
     }
 
-loadData= (value) => {
-    fetch(BASE_URL + `shopping?month=${value}`)
+    loadData = (value) => {
+        fetch(`${url.INVOICE}?month=${value}`)
             .then(response => response.json())
             .then(data => this.setState({
                 data,
                 isLoaded: true
             }))
-}
+    }
 
     TableHeader = () => (
         <thead>
@@ -40,14 +40,12 @@ loadData= (value) => {
         </tbody>
     );
 
-
     onItemClick = (item) => {
-        // this.props.history.push(item._links.self.href.replace(BASE_URL, ""))
-        this.props.history.push(`/shopping/${item.listId}`)
+        this.props.history.push(`/invoice/${item.listId}`)
     }
 
     previousMonth = () => {
-        const month = this.state.month -1;
+        const month = this.state.month - 1;
         this.setState({
             month: month,
             isLoaded: false
@@ -56,7 +54,7 @@ loadData= (value) => {
     }
 
     nextMonth = () => {
-        const month = this.state.month +1;
+        const month = this.state.month + 1;
         this.setState({
             month: month,
             isLoaded: false
@@ -86,4 +84,4 @@ loadData= (value) => {
     }
 }
 
-export default Shoppings;
+export default Invoice;

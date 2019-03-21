@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {BASE_URL} from '../navigation/ulrs'
+import * as url from '../../navigation/ulrs'
 import {withRouter} from 'react-router'
 
-class ShoppingDetails extends Component {
+class InvoiceDetails extends Component {
     state = {
         isLoaded: false,
         data: []
@@ -36,7 +36,7 @@ class ShoppingDetails extends Component {
     );
 
     componentDidMount() {
-        fetch(`${BASE_URL}shopping/${this.props.id}`)
+        fetch(`${url.INVOICE}/${this.props.id}`)
             .then(response => response.json())
             .then(data => this.setState({
                 data,
@@ -48,7 +48,6 @@ class ShoppingDetails extends Component {
         this.props.history.push(`/item/`+item.id)
     }
 
-    
     render() {
         return (
             <div>
@@ -62,4 +61,4 @@ class ShoppingDetails extends Component {
     }
 }
 
-export default withRouter( ShoppingDetails)
+export default withRouter( InvoiceDetails)

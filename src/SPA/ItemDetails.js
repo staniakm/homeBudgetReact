@@ -18,7 +18,6 @@ componentDidMount(){
             </div>
         )
     }
-
 }
 
 export default withRouter( ItemDetails)

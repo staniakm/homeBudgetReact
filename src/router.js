@@ -2,27 +2,27 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import App from './App'
 import Home from './SPA/Home'
-import Shoppings from './SPA/Shoppings'
-import ShoppingDetails from './SPA/ShoppingDetails'
+import Invoice from './SPA/Invoice/Invoice'
+import InvoiceDetails from './SPA/Invoice/InvoiceDetails'
 import Category from './SPA/Category/Category';
 import CategoryDetails from './SPA/Category/CategoryDetails'
 import ItemDetails from './SPA/ItemDetails'
 import Shop from './SPA/Shop/Shop'
 import ShopItems from './SPA/Shop/ShopItems'
-import Charts from './SPA/Charts'
+import MonthSpendingChart from './SPA/Charts/MonthSpendingCharts'
 
 export const Router = () => (
     <BrowserRouter>
         <Switch>
             <App>
                 <Route exact path={"/"} component={Home} />
-                <Route exact path={"/charts"} component={Charts} />
-                <Route exact path={"/shopping"} component={Shoppings} />
+                <Route exact path={"/charts"} component={MonthSpendingChart} />
+                <Route exact path={"/invoice"} component={Invoice} />
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>
-                <Route exact path={"/shopping/:id"}
-                    render={(props) => <ShoppingDetails id={props.match.params.id} />}
-                    name="shoppingDetails" />
+                <Route exact path={"/invoice/:id"}
+                    render={(props) => <InvoiceDetails id={props.match.params.id} />}
+                    name="invoiceDetails" />
                 <Route exact path={"/category/:id"}
                     render={(props) => <CategoryDetails id={props.match.params.id} />}
                     name="categoryDetails" />

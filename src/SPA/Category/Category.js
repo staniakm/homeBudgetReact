@@ -6,15 +6,39 @@ class Category extends Component {
 
     state = {
         isLoaded: false,
-        data: []
+        data: [],
+        ascOrder:true
     }
+
+    compareAscBy(key) {
+        return function (a, b) {
+          if (a[key] < b[key]) return -1;
+          if (a[key] > b[key]) return 1;
+          return 0;
+        };
+      }
+    
+      compareDescBy(key) {
+        return function (a, b) {
+          if (a[key] > b[key]) return -1;
+          if (a[key] < b[key]) return 1;
+          return 0;
+        };
+      }
+
+      sortBy(key) {
+        const ascOrder = this.state.ascOrder;
+        let arrayCopy = [...this.state.data];
+        arrayCopy.sort(ascOrder ? this.compareAscBy(key): this.compareDescBy(key));
+        this.setState({data: arrayCopy, ascOrder: ! ascOrder});
+      }
 
     TableHeader = () => (
         <thead>
             <tr className="oneRow">
-                <th scope="col">Nazwa</th>
-                <th scope="col">Koszt w danym miesiącu (zł)</th>
-                <th scope="col">Koszt w danym roku (zł)</th>
+                <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
+                <th scope="col" onClick={() => this.sortBy('monthSummary')}>Koszt w danym miesiącu (zł)</th>
+                <th scope="col" onClick={() => this.sortBy('yearSummary')}>Koszt w danym roku (zł)</th>
             </tr>
         </thead>
     );

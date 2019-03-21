@@ -76,4 +76,5 @@ ul.header li a {
   text-decoration: none;
   display: inline-block;
   font-size: 12px;
+  cursor: pointer;
 }
