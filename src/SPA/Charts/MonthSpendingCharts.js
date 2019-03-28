@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import DrawChart from './ChartDraw'
 
-class MonthSpendingChart extends React.Component {
+class MonthSpendingChart extends Component {
     month = {
         prevoius: "http://localhost:8080/api/chart/previousMonth",
         next: "http://localhost:8080/api/chart/currentMonth"

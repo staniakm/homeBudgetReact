@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import * as url from '../../navigation/ulrs'
+import { connect } from 'react-redux';
+import { setMonth } from '../../actions'
 
 class Invoice extends Component {
     state = {
@@ -40,41 +42,32 @@ class Invoice extends Component {
         </tbody>
     );
 
+    NavigationTab = () => (
+        <div className="rowC">
+            <input className="button" type="button" value="poprzedni miesiąc" onClick={() => this.changeMonth(-1)}></input>
+            <input className="button" type="button" value="obecny miesiąc" onClick={() => this.changeMonth(0)}></input>
+            <input className="button" type="button" value="następny miesiąc" onClick={() => this.changeMonth(1)}></input>
+        </div>
+    )
+
     onItemClick = (item) => {
         this.props.history.push(`/invoice/${item.listId}`)
     }
 
-    previousMonth = () => {
-        const month = this.state.month - 1;
-        this.setState({
-            month: month,
-            isLoaded: false
-        })
-        this.loadData(month)
-    }
-
-    nextMonth = () => {
-        const month = this.state.month + 1;
-        this.setState({
-            month: month,
-            isLoaded: false
-        })
+    changeMonth = (value) => {
+        const month = (value===0) ? 0 : this.props.month + value
+        this.props.setMonth(month);
         this.loadData(month)
     }
 
     componentDidMount() {
-        this.loadData(0)
+        this.loadData(this.props.month)
     }
 
     render() {
-        const style = { textAlign: 'center', width: '100%' }
         return (
             <div>
-                <div className="rowC">
-                    <input className="button" type="button" value="poprzedni" onClick={this.previousMonth}></input>
-                    <h1 style={style}>Paragony</h1>
-                    <input className="button" type="button" value="następny" onClick={this.nextMonth}></input>
-                </div>
+                <this.NavigationTab />
                 <table className="invoicesListTable table full-width">
                     <this.TableHeader />
                     <this.TableBody />
@@ -84,4 +77,15 @@ class Invoice extends Component {
     }
 }
 
-export default Invoice;
+const mapStateToProps = (state) => {
+    return {
+        month: state.monthReducer.month
+    }
+};
+
+const mapDispatchToProps = ({ 
+    setMonth: setMonth 
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Invoice);

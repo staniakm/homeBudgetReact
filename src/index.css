@@ -60,16 +60,23 @@ ul.header li a {
 .oneRow {
   border: solid 1px black;
   text-align: left;
-  cursor: pointer;
 }
 
-.rowC{display:flex; flex-direction:row; align-items: center}
+.clickable {
+  cursor: pointer;  
+}
+
+.sortable {
+  cursor: n-resize;
+}
+
+.rowC{display:flex; flex-direction:row}
 
 .button {
   height: 50%;
   display: inline-flex;
   background-color: #4CAF50; /* Green */
-  border: none;
+  
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -77,4 +84,5 @@ ul.header li a {
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
+  margin-right: 34.7%
 }

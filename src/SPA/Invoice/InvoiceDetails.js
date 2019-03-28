@@ -1,39 +1,13 @@
 import React, { Component } from 'react'
 import * as url from '../../navigation/ulrs'
-import {withRouter} from 'react-router'
+import { withRouter } from 'react-router'
+import IDTable from './InvoiceDetailsActions'
 
 class InvoiceDetails extends Component {
     state = {
         isLoaded: false,
         data: []
     }
-
-    TableHeader = () => (
-        <thead>
-        <tr className="oneRow">
-            <th scope="col">Nazwa</th>
-            <th scope="col">Ilość</th>
-            <th scope="col">Cena jednostkowa</th>
-            <th scope="col">Cena</th>
-            <th scope="col">Opis</th>
-        </tr>
-        </thead>
-    );
-
-    TableBody = () => (
-        <tbody>
-        {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.id} onClick={() => this.itemDetails(item)}>
-                    <td>{item.productName}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.unitPrice} zł</td>
-                    <td>{item.price} zł</td>
-                    <td>{item.description}</td>
-                </tr>
-            )
-        )}
-        </tbody>
-    );
 
     componentDidMount() {
         fetch(`${url.INVOICE}/${this.props.id}`)
@@ -44,21 +18,20 @@ class InvoiceDetails extends Component {
             }))
     };
 
-    itemDetails = (item) =>{
-        this.props.history.push(`/item/`+item.id)
+    itemDetails = (item) => {
+        this.props.history.push(`/item/` + item.id)
     }
 
     render() {
         return (
             <div>
                 <h1>Szczegóły paragonów</h1>
-                <table className="invoicesListTable table full-width">
-                 <this.TableHeader/>
-                 <this.TableBody />
-                </table>
+                {this.state.isLoaded &&
+                    <IDTable data={this.state.data} onClick={this.itemDetails} />
+                }
             </div>
         )
     }
 }
 
-export default withRouter( InvoiceDetails)
+export default withRouter(InvoiceDetails)

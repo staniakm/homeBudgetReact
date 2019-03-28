@@ -10,6 +10,7 @@ import ItemDetails from './SPA/ItemDetails'
 import Shop from './SPA/Shop/Shop'
 import ShopItems from './SPA/Shop/ShopItems'
 import MonthSpendingChart from './SPA/Charts/MonthSpendingCharts'
+import ExampleForm from './SPA/Form/ExampleForm'
 
 export const Router = () => (
     <BrowserRouter>
@@ -20,6 +21,7 @@ export const Router = () => (
                 <Route exact path={"/invoice"} component={Invoice} />
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>
+                <Route exact path={"/form"} component={ExampleForm}/>
                 <Route exact path={"/invoice/:id"}
                     render={(props) => <InvoiceDetails id={props.match.params.id} />}
                     name="invoiceDetails" />
