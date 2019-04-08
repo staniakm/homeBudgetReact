@@ -8,8 +8,8 @@ const NavigationPanel = () => {
             <li><NavLink to="/invoice">Paragony</NavLink></li>
             <li><NavLink to="/category">Kategorie</NavLink></li>
             <li><NavLink to="/shop">Sklepy</NavLink></li>
+            <li><NavLink to="/budget">Budżet</NavLink></li>
             <li><NavLink to="/charts">Wykresy</NavLink></li>
-            <li><NavLink to="/form">Formularz</NavLink></li>
         </ul>
     )
 }

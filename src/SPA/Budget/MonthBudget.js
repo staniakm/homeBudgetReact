@@ -1,19 +1,24 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as url from '../../navigation/ulrs'
 import { connect } from 'react-redux';
 import { setMonth } from '../../actions'
 
-class Invoice extends Component {
+class MonthBudget extends Component {
+
     state = {
         isLoaded: false,
-        data: []
+        date: new Date(),
+        data: [],
+
+        currentDate: new Date()
     }
 
     loadData = (value) => {
-        fetch(`${url.INVOICE}?month=${value}`)
+        fetch(`${url.BUDGET}?month=${value}`)
             .then(response => response.json())
             .then(data => this.setState({
-                data,
+                date: data.date,
+                data: data.budgets,
                 isLoaded: true
             }))
     }
@@ -21,9 +26,10 @@ class Invoice extends Component {
     TableHeader = () => (
         <thead>
             <tr className="oneRow">
-                <th scope="col">Sklep</th>
-                <th scope="col">Data</th>
-                <th scope="col">Cena</th>
+                <th scope="col">Kategoria</th>
+                <th scope="col">Wydane</th>
+                <th scope="col">Zaplanowane</th>
+                <th scope="col">Wykorzystanie planu</th>
             </tr>
         </thead>
     );
@@ -31,10 +37,11 @@ class Invoice extends Component {
     TableBody = () => (
         <tbody>
             {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.listId} onClick={() => this.onItemClick(item)}>
-                    <td>{item.name}</td>
-                    <td>{item.date}</td>
-                    <td>{item.price} zł</td>
+                <tr className="oneRow" key={item.category} >
+                    <td>{item.category}</td>
+                    <td>{item.spent} zł</td>
+                    <td>{item.planned} zł</td>
+                    <td>{item.percentage} %</td>
                 </tr>
             )
             )}
@@ -63,15 +70,18 @@ class Invoice extends Component {
         this.loadData(this.props.month)
     }
 
-    render() {
+    render(){
         return (
             <div>
-                <h1>Paragony</h1>
+                <div>
+                    {this.state.isLoaded &&
+                <h1>Budżet za {this.state.date}</h1>}
                 <this.NavigationTab />
                 <table className="invoicesListTable table full-width">
                     <this.TableHeader />
                     <this.TableBody />
                 </table>
+            </div>
             </div>
         )
     }
@@ -88,4 +98,4 @@ const mapDispatchToProps = ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Invoice);
+export default connect(mapStateToProps, mapDispatchToProps)(MonthBudget);

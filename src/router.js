@@ -10,7 +10,7 @@ import ItemDetails from './SPA/ItemDetails'
 import Shop from './SPA/Shop/Shop'
 import ShopItems from './SPA/Shop/ShopItems'
 import MonthSpendingChart from './SPA/Charts/MonthSpendingCharts'
-import ExampleForm from './SPA/Form/ExampleForm'
+import MonthBudget from './SPA/Budget/MonthBudget';
 
 export const Router = () => (
     <BrowserRouter>
@@ -19,9 +19,9 @@ export const Router = () => (
                 <Route exact path={"/"} component={Home} />
                 <Route exact path={"/charts"} component={MonthSpendingChart} />
                 <Route exact path={"/invoice"} component={Invoice} />
+                <Route exact path={"/budget"} component={MonthBudget} />
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>
-                <Route exact path={"/form"} component={ExampleForm}/>
                 <Route exact path={"/invoice/:id"}
                     render={(props) => <InvoiceDetails id={props.match.params.id} />}
                     name="invoiceDetails" />
@@ -34,7 +34,7 @@ export const Router = () => (
                 <Route exact path={"/shop/:id/month"}
                     render={(props) => <ShopItems id={props.match.params.id} />}
                     name="shopItems"/>
-                    <Route exact path={"/shop/:id/year"}
+                <Route exact path={"/shop/:id/year"}
                     render={(props) => <ShopItems id={props.match.params.id} />}
                     name="shopItems"/>
             </App>
