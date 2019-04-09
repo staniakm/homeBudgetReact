@@ -36,6 +36,11 @@ ul.header li a {
   padding: 20px;
   display: inline-block;
 }
+
+.app_header {
+  text-align: center;
+}
+
 .content {
   background-color: #FFF;
   padding: 20px;
@@ -57,6 +62,12 @@ ul.header li a {
 }
 
 .oneRow {
+  border: solid 1px black;
+  text-align: left;
+}
+
+thead {
+  background-color: lightslategrey;
   border: solid 1px black;
   text-align: left;
 }

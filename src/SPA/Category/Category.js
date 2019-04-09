@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../../navigation/ulrs'
+import { BASE_URL } from '../../Navigation/ulrs'
 import sorter from '../../Util/Sort'
-
+import { Table } from 'reactstrap';
 class Category extends Component {
 
     state = {
@@ -59,10 +59,11 @@ class Category extends Component {
         return (
             <div>
                 <h1>Lista kategorii</h1>
-                <table className="invoicesListTable table full-width">
+                {/* <table className="invoicesListTable table full-width"> */}
+                <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
-                </table>
+                    </Table>
             </div>
         )
     }

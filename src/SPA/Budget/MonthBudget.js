@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
-import * as url from '../../navigation/ulrs'
+import React, { Component } from 'react'
+import * as url from '../../Navigation/ulrs'
 import { connect } from 'react-redux';
-import { setMonth } from '../../actions'
+import { setMonth } from '../../Action'
+import { Table, Button } from 'reactstrap';
 
 class MonthBudget extends Component {
 
@@ -11,16 +12,6 @@ class MonthBudget extends Component {
         data: [],
 
         currentDate: new Date()
-    }
-
-    loadData = (value) => {
-        fetch(`${url.BUDGET}?month=${value}`)
-            .then(response => response.json())
-            .then(data => this.setState({
-                date: data.date,
-                data: data.budgets,
-                isLoaded: true
-            }))
     }
 
     TableHeader = () => (
@@ -50,15 +41,11 @@ class MonthBudget extends Component {
 
     NavigationTab = () => (
         <div className="rowC">
-            <input className="button" type="button" value="poprzedni miesiąc" onClick={() => this.changeMonth(-1)}></input>
-            <input className="button" type="button" value="obecny miesiąc" onClick={() => this.changeMonth(0)}></input>
-            <input className="button" type="button" value="następny miesiąc" onClick={() => this.changeMonth(1)}></input>
+            <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
         </div>
     )
-
-    onItemClick = (item) => {
-        this.props.history.push(`/invoice/${item.listId}`)
-    }
 
     changeMonth = (value) => {
         const month = (value === 0) ? 0 : this.props.month + value
@@ -70,18 +57,28 @@ class MonthBudget extends Component {
         this.loadData(this.props.month)
     }
 
-    render(){
+    loadData = (value) => {
+        fetch(`${url.BUDGET}?month=${value}`)
+            .then(response => response.json())
+            .then(data => this.setState({
+                date: data.date,
+                data: data.budgets,
+                isLoaded: true
+            }))
+    }
+
+    render() {
         return (
             <div>
                 <div>
                     {this.state.isLoaded &&
-                <h1>Budżet za {this.state.date}</h1>}
-                <this.NavigationTab />
-                <table className="invoicesListTable table full-width">
-                    <this.TableHeader />
-                    <this.TableBody />
-                </table>
-            </div>
+                        <h2>Budżet za {this.state.date}</h2>}
+                    <this.NavigationTab />
+                    <Table striped>
+                        <this.TableHeader />
+                        <this.TableBody />
+                    </Table>
+                </div>
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import * as url from '../../navigation/ulrs'
+import * as url from '../../Navigation/ulrs'
 import { withRouter } from 'react-router'
 import IDTable from './InvoiceDetailsActions'
 

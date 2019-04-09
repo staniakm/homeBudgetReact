@@ -1,8 +1,9 @@
 import React from 'react'
+import { Table } from 'reactstrap';
 
 const TableHeader = () => (
     <thead>
-        <tr className="oneRow">
+        <tr className="tableHeaderColumn">
             <th scope="col">Nazwa</th>
             <th scope="col">Ilość</th>
             <th scope="col">Cena jednostkowa</th>
@@ -15,7 +16,7 @@ const TableHeader = () => (
 const TableBody = ({data, onItemClick}) => (
     <tbody>
         {data && data.map(item => (
-            <tr className="oneRow" key={item.id} onClick={() => onItemClick(item)}>
+            <tr className="oneRow clickable" key={item.id} onClick={() => onItemClick(item)}>
                 <td>{item.productName}</td>
                 <td>{item.quantity}</td>
                 <td>{item.unitPrice} zł</td>
@@ -29,10 +30,11 @@ const TableBody = ({data, onItemClick}) => (
 
 const IDTable = (props) => {
     return (
-        <table className="invoicesListTable table full-width">
+        // <table className="invoicesListTable table full-width">
+        <Table striped>
             <TableHeader/>
             <TableBody data={props.data} onItemClick={props.onClick}/>
-        </table>
+            </Table>
     )
 }
 

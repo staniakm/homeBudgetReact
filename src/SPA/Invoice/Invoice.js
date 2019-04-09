@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import * as url from '../../navigation/ulrs'
+import * as url from '../../Navigation/ulrs'
 import { connect } from 'react-redux';
-import { setMonth } from '../../actions'
+import { setMonth } from '../../Action'
+import { Table, Button } from 'reactstrap';
 
 class Invoice extends Component {
     state = {
@@ -20,7 +21,7 @@ class Invoice extends Component {
 
     TableHeader = () => (
         <thead>
-            <tr className="oneRow">
+            <tr className="tableHeaderColumn oneRow">
                 <th scope="col">Sklep</th>
                 <th scope="col">Data</th>
                 <th scope="col">Cena</th>
@@ -31,7 +32,7 @@ class Invoice extends Component {
     TableBody = () => (
         <tbody>
             {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.listId} onClick={() => this.onItemClick(item)}>
+                <tr className="oneRow clickable" key={item.listId} onClick={() => this.onItemClick(item)}>
                     <td>{item.name}</td>
                     <td>{item.date}</td>
                     <td>{item.price} zł</td>
@@ -43,9 +44,9 @@ class Invoice extends Component {
 
     NavigationTab = () => (
         <div className="rowC">
-            <input className="button" type="button" value="poprzedni miesiąc" onClick={() => this.changeMonth(-1)}></input>
-            <input className="button" type="button" value="obecny miesiąc" onClick={() => this.changeMonth(0)}></input>
-            <input className="button" type="button" value="następny miesiąc" onClick={() => this.changeMonth(1)}></input>
+        <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
         </div>
     )
 
@@ -68,10 +69,11 @@ class Invoice extends Component {
             <div>
                 <h1>Paragony</h1>
                 <this.NavigationTab />
-                <table className="invoicesListTable table full-width">
+                {/* <table className="invoicesListTable table full-width"> */}
+                <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
-                </table>
+                </Table>
             </div>
         )
     }

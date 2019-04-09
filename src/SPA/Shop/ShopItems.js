@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {BASE_URL} from '../../navigation/ulrs'
+import {BASE_URL} from '../../Navigation/ulrs'
 import {withRouter} from 'react-router'
 
 class ShopItems extends Component {

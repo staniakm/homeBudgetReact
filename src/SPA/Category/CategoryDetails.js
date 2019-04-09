@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../../navigation/ulrs'
-
+import { BASE_URL } from '../../Navigation/ulrs'
+import { Table } from 'reactstrap';
 
 class CategoryDetails extends Component {
 
@@ -45,11 +45,10 @@ class CategoryDetails extends Component {
         return (
             <div>
                 <h1>Wydatki w danej kategorii w obecnym miesiącu</h1>
-                <table className="invoicesListTable table full-width">
+                <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
-                </table>
-
+                    </Table>
             </div>
         )
     }
