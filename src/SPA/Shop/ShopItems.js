@@ -15,9 +15,10 @@ class ShopItems extends Component {
         <tr className="oneRow">
             <th scope="col">Nazwa</th>
             <th scope="col">Ilość</th>
-            <th scope="col">Cena jednostkowa</th>
-            <th scope="col">Cena</th>
-            <th scope="col">Opis</th>
+            <th scope="col">Cena minimalna</th>
+            <th scope="col">Cena maksymalna</th>
+            <th scope="col">Suma rabatu</th>
+            <th scope="col">Suma wydana</th>
         </tr>
         </thead>
     );
@@ -28,9 +29,10 @@ class ShopItems extends Component {
                 <tr className="oneRow" key={item.id} onClick={() => this.itemDetails(item)}>
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
-                    <td>{item.unitPrice} zł</td>
-                    <td>{item.price} zł</td>
-                    <td>{item.description}</td>
+                    <td>{item.minPrice} zł</td>
+                    <td>{item.maxPrice} zł</td>
+                    <td>{item.totalDiscount} zł</td>
+                    <td>{item.totalSpend} zł</td>
                 </tr>
             )
         )}
