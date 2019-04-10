@@ -20,7 +20,7 @@ class CategoryDetails extends Component {
 
     TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.data.map(item => (
+            {this.state.isLoaded && this.state.data.details.map(item => (
                 <tr className="oneRow" key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.price}</td>
@@ -39,12 +39,10 @@ class CategoryDetails extends Component {
             }))
     };
 
-
-
     render() {
         return (
             <div>
-                <h1>Wydatki w danej kategorii w obecnym miesiącu</h1>
+            <h3>Wydatki w kategorii {this.state.data.name} w obecnym miesiącu wyniosły {this.state.data.monthSummary} zł</h3>
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
