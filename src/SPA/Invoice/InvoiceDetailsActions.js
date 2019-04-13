@@ -8,7 +8,7 @@ const TableHeader = () => (
             <th scope="col">Ilość</th>
             <th scope="col">Cena jednostkowa</th>
             <th scope="col">Rabat</th>
-            <th scope="col">Cena</th>
+            <th scope="col">Suma</th>
         </tr>
     </thead>
 );
@@ -30,7 +30,6 @@ const TableBody = ({data, onItemClick}) => (
 
 const IDTable = (props) => {
     return (
-        // <table className="invoicesListTable table full-width">
         <Table striped>
             <TableHeader/>
             <TableBody data={props.data} onItemClick={props.onClick}/>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BASE_URL } from '../../Navigation/ulrs'
 import { Table } from 'reactstrap';
+import sorter from '../../Util/Sort'
 class Shop extends Component {
 
     state = {
@@ -8,12 +9,21 @@ class Shop extends Component {
         data: []
     }
 
+    sortBy(key){
+        const {data, ascOrder} = this.state
+        const sorted = sorter(key, data, ascOrder)
+        this.setState({
+            data: sorted,
+            ascOrder: !ascOrder
+        })
+    }
+
     TableHeader = () => (
         <thead>
-            <tr className="oneRow">
-                <th scope="col">Nazwa</th>
-                <th scope="col">Wydane w tym miesiącu</th>
-                <th scope="col">Wydane w tym roku</th>
+            <tr className="oneRow sortable">
+                <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
+                <th scope="col" onClick={() => this.sortBy('monthSum')}>Wydane w tym miesiącu</th>
+                <th scope="col" onClick={() => this.sortBy('yearSum')}>Wydane w tym roku</th>
             </tr>
         </thead>
     );

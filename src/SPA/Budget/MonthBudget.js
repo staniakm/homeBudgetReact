@@ -10,7 +10,9 @@ class MonthBudget extends Component {
         isLoaded: false,
         date: new Date(),
         data: [],
-
+        spend: "",
+        planned: "",
+        earned:"",
         currentDate: new Date()
     }
 
@@ -32,7 +34,7 @@ class MonthBudget extends Component {
                     <td>{item.category}</td>
                     <td>{item.spent} zł</td>
                     <td>{item.planned} zł</td>
-                    <td>{item.percentage} %</td>
+                    <td style={{ color: item.percentage > 100 ? 'red' : item.percentage > 85 ? "orange" : "green" }}>{item.percentage} %</td>
                 </tr>
             )
             )}
@@ -62,6 +64,9 @@ class MonthBudget extends Component {
             .then(response => response.json())
             .then(data => this.setState({
                 date: data.date,
+                planned: data.totalPlanned,
+                spend: data.totalSpend,
+                earned: data.totalEarned,
                 data: data.budgets,
                 isLoaded: true
             }))
@@ -72,7 +77,12 @@ class MonthBudget extends Component {
             <div>
                 <div>
                     {this.state.isLoaded &&
-                        <h2>Budżet za {this.state.date}</h2>}
+                    <div>
+                        <h2>Budżet za {this.state.date}</h2>
+                        <p>Zaplanowane: {this.state.planned} zł</p>
+                        <p>Wydatki: {this.state.spend} zł</p>
+                        <p>Przychód: {this.state.earned} zł</p>
+                        </div>}
                     <this.NavigationTab />
                     <Table striped>
                         <this.TableHeader />
