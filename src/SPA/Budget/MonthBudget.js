@@ -3,6 +3,7 @@ import * as url from '../../Navigation/ulrs'
 import { connect } from 'react-redux';
 import { setMonth } from '../../Action'
 import { Table, Button } from 'reactstrap';
+import {withRouter} from 'react-router-dom';
 
 class MonthBudget extends Component {
 
@@ -23,6 +24,7 @@ class MonthBudget extends Component {
                 <th scope="col">Wydane</th>
                 <th scope="col">Zaplanowane</th>
                 <th scope="col">Wykorzystanie planu</th>
+                <th scope="col">Operacja</th>
             </tr>
         </thead>
     );
@@ -35,6 +37,7 @@ class MonthBudget extends Component {
                     <td>{item.spent} zł</td>
                     <td>{item.planned} zł</td>
                     <td style={{ color: item.percentage > 100 ? 'red' : item.percentage > 85 ? "orange" : "green" }}>{item.percentage} %</td>
+                    <td><Button outline color="success" onClick={() => this.editBudget(item.category)}>Edytuj</Button></td>
                 </tr>
             )
             )}
@@ -57,6 +60,10 @@ class MonthBudget extends Component {
 
     componentDidMount() {
         this.loadData(this.props.month)
+    }
+
+    editBudget = (category) =>{
+        this.props.history.push(`budget/edit?${category}`)
     }
 
     loadData = (value) => {
@@ -105,4 +112,4 @@ const mapDispatchToProps = ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MonthBudget);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthBudget));

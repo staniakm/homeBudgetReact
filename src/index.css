@@ -85,7 +85,7 @@ thead {
 .button {
   height: 50%;
   display: inline-flex;
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50; 
   
   color: white;
   padding: 15px 32px;

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BASE_URL } from '../../Navigation/ulrs'
 import sorter from '../../Util/Sort'
 import { Table } from 'reactstrap';
+import axios from 'axios'
 class Category extends Component {
 
     state = {
@@ -47,10 +48,10 @@ class Category extends Component {
     }
 
     componentDidMount() {
-        fetch(BASE_URL + "category")
-            .then(response => response.json())
-            .then(data => this.setState({
-                data: data,
+        axios.get(BASE_URL + "category")
+            .then(response => 
+                this.setState({
+                data: response.data,
                 isLoaded: true
             }))
     }
@@ -59,7 +60,6 @@ class Category extends Component {
         return (
             <div>
                 <h1>Lista kategorii</h1>
-                {/* <table className="invoicesListTable table full-width"> */}
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
