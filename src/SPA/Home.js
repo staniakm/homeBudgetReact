@@ -4,9 +4,9 @@ function Home (){
     return (
         <div>
             <h2>Budżet domowy</h2>
-            <p>Aplikacja na potrzeby nauki React</p>   
-            <p>Jako backend proste rest api</p>
-            <p>Backend napisany w Kotlin z wykorzystaniem Spring Boot</p> 
+            <p>Frontend ReactJS</p>
+            <p>Backend Rest Api Kotlin z wykorzystaniem Spring Boot</p> 
+            <p>Baza danych SQL Server</p> 
         </div>
     )
 }

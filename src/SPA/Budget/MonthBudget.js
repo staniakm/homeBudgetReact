@@ -4,17 +4,13 @@ import { connect } from 'react-redux';
 import { setMonth } from '../../Action'
 import { Table } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup,Progress  } from 'reactstrap';
 import axios from 'axios';
 class MonthBudget extends Component {
 
     state = {
         isLoaded: false,
         date: new Date(),
-        data: [],
-        spend: "",
-        planned: "",
-        earned: "",
         modal: false,
         categoryPlanned: "",
         update: false
@@ -34,12 +30,12 @@ class MonthBudget extends Component {
 
     TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.data.map(item => (
+            {this.state.isLoaded && this.state.budgetData.budgets.map(item => (
                 <tr className="oneRow" key={item.category} >
                     <td>{item.category}</td>
                     <td>{item.spent} zł</td>
                     <td>{item.planned} zł</td>
-                    <td style={{ color: item.percentage > 100 ? 'red' : item.percentage > 85 ? "orange" : "green" }}>{item.percentage} %</td>
+                    <td><Progress color ={item.percentage > 100 ? 'danger' : item.percentage > 85 ? "warning" : "success"} value={item.percentage} >{item.percentage} %</Progress></td>
                     <td><Button outline color="success" onClick={() => this.editBudget(item)}>Edytuj</Button></td>
                 </tr>
             )
@@ -66,7 +62,6 @@ class MonthBudget extends Component {
     }
 
     editBudget = (category) => {
-        // this.props.history.push(`budget/edit?${category}`)
         this.setState({
             modal: true,
             categoryPlanned: category
@@ -82,21 +77,13 @@ class MonthBudget extends Component {
 
     updatePlannedValue = () => {
         let { categoryPlanned } = this.state
-        // const monthBudget = {
-        //     category: categoryPlanned.category,
-        //     planned: categoryPlanned.planned
-        // }
         axios.post(`${url.BUDGET}?month=${this.props.month}`,
             {
                 category: categoryPlanned.category,
                 planned: categoryPlanned.planned
             })
             .then(response => this.setState({
-                date: response.data.date,
-                planned: response.data.totalPlanned,
-                spend: response.data.totalSpend,
-                earned: response.data.totalEarned,
-                data: response.data.budgets,
+                budgetData: response.data,
                 isLoaded: true
             }));
     }
@@ -110,10 +97,10 @@ class MonthBudget extends Component {
     }
 
     updateValue = (e) => {
-        var cat = this.state.categoryPlanned;
-        cat.planned = e.target.value;
+        var category = this.state.categoryPlanned;
+        category.planned = e.target.value;
         this.setState({
-            categoryPlanned: cat,
+            categoryPlanned: category,
             update: true
         })
     }
@@ -121,11 +108,7 @@ class MonthBudget extends Component {
     loadData = (value) => {
         axios.get(`${url.BUDGET}?month=${value}`)
             .then(response => this.setState({
-                date: response.data.date,
-                planned: response.data.totalPlanned,
-                spend: response.data.totalSpend,
-                earned: response.data.totalEarned,
-                data: response.data.budgets,
+                budgetData: response.data,
                 isLoaded: true
             }))
     }
@@ -136,10 +119,11 @@ class MonthBudget extends Component {
                 <div>
                     {this.state.isLoaded &&
                         <div>
-                            <h2>Budżet za {this.state.date}</h2>
-                            <p>Zaplanowane: {this.state.planned} zł</p>
-                            <p>Wydatki: {this.state.spend} zł</p>
-                            <p>Przychód: {this.state.earned} zł</p>
+                            <h3>Budżet na {this.state.budgetData.date}</h3>
+                            <p>Zaplanowane: {this.state.budgetData.totalPlanned} zł</p>
+                            <p>Wydane: {this.state.budgetData.totalSpend} zł</p>
+                            <hr/>
+                            <p>Przychód: {this.state.budgetData.totalEarned} zł</p>
                         </div>}
                     <this.NavigationTab />
                     <Table striped>

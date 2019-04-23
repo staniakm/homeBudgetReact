@@ -11,7 +11,6 @@ import Shop from './SPA/Shop/Shop'
 import ShopItems from './SPA/Shop/ShopItems'
 import MonthSpendingChart from './SPA/Charts/MonthSpendingCharts'
 import MonthBudget from './SPA/Budget/MonthBudget';
-import BudgetEdit from './SPA/Budget/BudgetEdit';
 
 export const Router = () => (
     <BrowserRouter>
@@ -21,7 +20,6 @@ export const Router = () => (
                 <Route exact path={"/charts"} component={MonthSpendingChart} />
                 <Route exact path={"/invoice"} component={Invoice} />
                 <Route exact path={"/budget"} component={MonthBudget} />
-                <Route exact path={"/budget/edit"} component={BudgetEdit}/>
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>
                 <Route exact path={"/invoice/:id"}
