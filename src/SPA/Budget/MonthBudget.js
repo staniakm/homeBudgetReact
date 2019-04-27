@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setMonth } from '../../Action'
 import { Table } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup,Progress  } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
 import axios from 'axios';
 class MonthBudget extends Component {
 
@@ -35,13 +35,45 @@ class MonthBudget extends Component {
                     <td>{item.category}</td>
                     <td>{item.spent} zł</td>
                     <td>{item.planned} zł</td>
-                    <td><Progress color ={item.percentage > 100 ? 'danger' : item.percentage > 85 ? "warning" : "success"} value={item.percentage} >{item.percentage} %</Progress></td>
+                    <td><Progress color={item.percentage > 100 ? 'danger' : item.percentage > 85 ? "warning" : "success"} value={item.percentage} >{item.percentage} %</Progress></td>
                     <td><Button outline color="success" onClick={() => this.editBudget(item)}>Edytuj</Button></td>
                 </tr>
             )
             )}
         </tbody>
     );
+
+    TableSummaryHeader = () => (
+        <thead>
+            <tr className="oneRow">
+                <th scope="col">Budżet</th>
+                <th scope="col">Zaplanowane</th>
+                <th scope="col">Wydane</th>
+                <th scope="col">Przychód</th>
+                <th scope="col">Oszczędności</th>
+                <th>% wydanych pieniędzy</th>
+            </tr>
+        </thead>
+    );
+
+    TableSummaryBody = () => (
+        <tbody>
+            {this.state.isLoaded &&
+                <tr className="oneRow" key={1} >
+                    <td>{this.state.budgetData.date}</td>
+                    <td>{this.state.budgetData.totalPlanned} zł</td>
+                    <td>{this.state.budgetData.totalSpend} zł</td>
+                    <td>{this.state.budgetData.totalEarned} zł</td>
+                    <td>{Math.round((this.state.budgetData.totalEarned - this.state.budgetData.totalSpend)*100)/100} zł</td>
+                    <td><Progress color={this.calculateExpense() > 100 ? 'danger' : this.calculateExpense() > 85 ? "warning" : "success"} value={this.calculateExpense()} >{this.calculateExpense()} %</Progress></td>
+                </tr>
+            }
+        </tbody>
+    );
+
+    calculateExpense(){
+      return Math.round((this.state.budgetData.totalSpend/this.state.budgetData.totalEarned)*100)
+    }
 
     NavigationTab = () => (
         <div className="rowC">
@@ -116,14 +148,10 @@ class MonthBudget extends Component {
         return (
             <div>
                 <div>
-                    {this.state.isLoaded &&
-                        <div>
-                            <h3>Budżet na {this.state.budgetData.date}</h3>
-                            <p>Zaplanowane: {this.state.budgetData.totalPlanned} zł</p>
-                            <p>Wydane: {this.state.budgetData.totalSpend} zł</p>
-                            <hr/>
-                            <p>Przychód: {this.state.budgetData.totalEarned} zł</p>
-                        </div>}
+                    <Table striped>
+                        <this.TableSummaryHeader />
+                        <this.TableSummaryBody />
+                    </Table>
                     <this.NavigationTab />
                     <Table striped>
                         <this.TableHeader />

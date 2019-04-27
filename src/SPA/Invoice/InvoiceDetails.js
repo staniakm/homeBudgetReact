@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import * as url from '../../Navigation/ulrs'
 import { withRouter } from 'react-router'
 import IDTable from './InvoiceDetailsActions'
-
+import { connect } from 'react-redux';
+import {selectProduct} from '../../Action'
 class InvoiceDetails extends Component {
     state = {
         isLoaded: false,
@@ -20,6 +21,7 @@ class InvoiceDetails extends Component {
 
     itemDetails = (item) => {
         console.log(item)
+        this.props.selectProduct(item)
         this.props.history.push(`/item/` + item.itemId)
     }
 
@@ -35,4 +37,14 @@ class InvoiceDetails extends Component {
     }
 }
 
-export default withRouter(InvoiceDetails)
+const mapStateToProps = (state) => {
+    return {
+        product: state.invoiceReducer.product
+    }
+};
+
+const mapDispatchToProps = ({
+    selectProduct: selectProduct
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InvoiceDetails))

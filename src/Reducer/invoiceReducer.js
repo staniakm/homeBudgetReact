@@ -4,6 +4,11 @@ switch(action.type){
     return [
         ...action.invoices
     ]
+    case 'SET_PRODUCT':
+    return {
+        ...state,
+        product: action.product
+    }
     default:
         return state;
 }

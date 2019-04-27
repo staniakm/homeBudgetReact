@@ -3,7 +3,8 @@ import { BASE_URL } from '../Navigation/ulrs'
 import { withRouter } from 'react-router'
 import axios from 'axios';
 import { Table } from 'reactstrap';
-
+import {selectProduct} from '../Action'
+import {connect} from 'react-redux'
 class ItemDetails extends Component {
     state = {
         items: [],
@@ -51,7 +52,7 @@ class ItemDetails extends Component {
     render() {
         return (
             <div>
-                <h1>Szczegóły produktu {this.props.itemName}</h1>
+                <h1>Szczegóły dla produktu '{this.props.product.productName}'</h1>
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
@@ -61,4 +62,14 @@ class ItemDetails extends Component {
     }
 }
 
-export default withRouter(ItemDetails)
+const mapStateToProps = (state) => {
+    return {
+        product: state.invoiceReducer.product
+    }
+};
+
+const mapDispatchToProps = ({
+    selectProduct: selectProduct
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemDetails))
