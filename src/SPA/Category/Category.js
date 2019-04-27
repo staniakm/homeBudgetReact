@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../../Navigation/ulrs'
+import * as url from '../../Navigation/ulrs'
 import sorter from '../../Util/Sort'
 import { Table } from 'reactstrap';
 import axios from 'axios'
@@ -33,7 +33,7 @@ class Category extends Component {
     TableBody = () => (
         <tbody>
             {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow clickable" key={item.id} onClick={() => this.onCategoryClick(item)}>
+                <tr className="oneRow clickable" key={item.id} onClick={() => this.onCategoryClick(item.id)}>
                     <td>{item.name}</td>
                     <td>{item.monthSummary}</td>
                     <td>{item.yearSummary}</td>
@@ -44,11 +44,11 @@ class Category extends Component {
     );
 
     onCategoryClick = (item) => {
-        this.props.history.push(`/category/${item.id}`)
+        this.props.history.push(`/category/${item}`)
     }
 
     componentDidMount() {
-        axios.get(BASE_URL + "category")
+        axios.get(url.CATEGORY)
             .then(response => 
                 this.setState({
                 data: response.data,

@@ -10,7 +10,7 @@ class InvoiceDetails extends Component {
     }
 
     componentDidMount() {
-        fetch(`${url.INVOICE}/${this.props.id}`)
+        fetch(`${url.INVOICE}${this.props.id}`)
             .then(response => response.json())
             .then(data => this.setState({
                 data,
@@ -19,13 +19,14 @@ class InvoiceDetails extends Component {
     };
 
     itemDetails = (item) => {
-        this.props.history.push(`/item/` + item.id)
+        console.log(item)
+        this.props.history.push(`/item/` + item.itemId)
     }
 
     render() {
         return (
             <div>
-                <h1>Szczegóły paragonów</h1>
+                <h1>Szczegóły paragonu</h1>
                 {this.state.isLoaded &&
                     <IDTable data={this.state.data} onClick={this.itemDetails} />
                 }

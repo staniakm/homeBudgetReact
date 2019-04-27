@@ -66,7 +66,6 @@ class MonthBudget extends Component {
             modal: true,
             categoryPlanned: category
         })
-
     }
 
     toggleClose = () => {

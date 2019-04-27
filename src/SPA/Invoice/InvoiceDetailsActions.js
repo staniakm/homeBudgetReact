@@ -16,7 +16,7 @@ const TableHeader = () => (
 const TableBody = ({data, onItemClick}) => (
     <tbody>
         {data && data.map(item => (
-            <tr className="oneRow clickable" key={item.id} onClick={() => onItemClick(item)}>
+            <tr className="oneRow clickable" key={item.itemId} onClick={() => onItemClick(item)}>
                 <td>{item.productName}</td>
                 <td>{item.quantity}</td>
                 <td>{item.price} zł</td>

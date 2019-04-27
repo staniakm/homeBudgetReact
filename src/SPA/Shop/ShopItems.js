@@ -40,7 +40,7 @@ class ShopItems extends Component {
     );
 
     itemDetails = (item) =>{
-        this.props.history.push(`/item/`+item.id)
+        this.props.history.push(`/item/`+item.itemId)
     }
 
     componentDidMount(){

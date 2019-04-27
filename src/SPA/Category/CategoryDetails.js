@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../../Navigation/ulrs'
+import * as url from '../../Navigation/ulrs'
 import { Table } from 'reactstrap';
-
+import axios from 'axios';
 class CategoryDetails extends Component {
 
     state = {
@@ -31,10 +31,9 @@ class CategoryDetails extends Component {
     );
 
     componentDidMount() {
-        fetch(BASE_URL + "category/" + this.props.id)
-            .then(response => response.json())
-            .then(data => this.setState({
-                data,
+        axios.get(url.CATEGORY + this.props.id)
+            .then(res => this.setState({
+                data: res.data,
                 isLoaded: true
             }))
     };
@@ -42,11 +41,11 @@ class CategoryDetails extends Component {
     render() {
         return (
             <div>
-            <h3>Wydatki w kategorii {this.state.data.name} w obecnym miesiącu wyniosły {this.state.data.monthSummary} zł</h3>
+                <h3>Wydatki w kategorii {this.state.data.name} w obecnym miesiącu wyniosły {this.state.data.monthSummary} zł</h3>
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
-                    </Table>
+                </Table>
             </div>
         )
     }
