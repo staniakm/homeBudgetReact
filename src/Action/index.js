@@ -12,3 +12,8 @@ export const selectProduct = (product) => ({
     type: 'SET_PRODUCT',
     product
 })
+
+export const setShopItems = (shopItems) => ({
+    type: 'SET_SHOP_ITEMS',
+    shopItems
+})

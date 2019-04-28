@@ -1,32 +1,33 @@
-import React, {Component} from 'react'
-import {BASE_URL} from '../../Navigation/ulrs'
-import {withRouter} from 'react-router'
+import React, { Component } from 'react'
+import { BASE_URL } from '../../Navigation/ulrs'
+import { withRouter } from 'react-router'
+import { selectProduct, setShopItems } from '../../Action'
+import { connect } from 'react-redux'
+import axios from 'axios';
 
 class ShopItems extends Component {
 
     state = {
         isLoaded: false,
-        data: []
     }
 
-    
     TableHeader = () => (
         <thead>
-        <tr className="oneRow">
-            <th scope="col">Nazwa</th>
-            <th scope="col">Ilość</th>
-            <th scope="col">Cena minimalna</th>
-            <th scope="col">Cena maksymalna</th>
-            <th scope="col">Suma rabatu</th>
-            <th scope="col">Suma wydana</th>
-        </tr>
+            <tr className="oneRow">
+                <th scope="col">Nazwa</th>
+                <th scope="col">Ilość</th>
+                <th scope="col">Cena minimalna</th>
+                <th scope="col">Cena maksymalna</th>
+                <th scope="col">Suma rabatu</th>
+                <th scope="col">Suma wydana</th>
+            </tr>
         </thead>
     );
 
     TableBody = () => (
         <tbody>
-        {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.id} onClick={() => this.itemDetails(item)}>
+            {this.state.isLoaded && this.props.shopItems.map(item => (
+                <tr className="oneRow clickable" key={item.id} onClick={() => this.itemDetails(item)}>
                     <td>{item.productName}</td>
                     <td>{item.quantity}</td>
                     <td>{item.minPrice} zł</td>
@@ -35,30 +36,31 @@ class ShopItems extends Component {
                     <td>{item.totalSpend} zł</td>
                 </tr>
             )
-        )}
+            )}
         </tbody>
     );
 
-    itemDetails = (item) =>{
-        this.props.history.push(`/item/`+item.itemId)
+    itemDetails = (item) => {
+        this.props.selectProduct(item)
+        this.props.history.push(`/item/` + item.itemId)
     }
 
-    componentDidMount(){
-        const path =this.props.location.pathname 
-        fetch(`${BASE_URL}${path}`)
-        .then(response => response.json())
-        .then(data => this.setState({
-            data: data,
-            isLoaded: true
-        }))
+    componentDidMount() {
+        const path = this.props.location.pathname
+        axios.get(`${BASE_URL}${path}`)
+            .then(response => response.data)
+            .then(data => (this.props.setShopItems(data)))
+            .then(data => this.setState({
+                isLoaded: true
+            }))
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <h1>Sklep - podsumowanie</h1>
                 <table className="invoicesListTable table full-width">
-                    <this.TableHeader/>
+                    <this.TableHeader />
                     <this.TableBody />
                 </table>
             </div>
@@ -66,4 +68,16 @@ class ShopItems extends Component {
     }
 }
 
-export default withRouter(ShopItems)
+const mapStateToProps = (state) => {
+    return {
+        product: state.invoiceReducer.product,
+        shopItems: state.shopReducer.shopItems
+    }
+};
+
+const mapDispatchToProps = ({
+    selectProduct: selectProduct,
+    setShopItems: setShopItems
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopItems))

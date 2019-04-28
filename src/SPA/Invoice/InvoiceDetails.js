@@ -20,7 +20,6 @@ class InvoiceDetails extends Component {
     };
 
     itemDetails = (item) => {
-        console.log(item)
         this.props.selectProduct(item)
         this.props.history.push(`/item/` + item.itemId)
     }

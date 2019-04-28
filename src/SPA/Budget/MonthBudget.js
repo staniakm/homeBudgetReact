@@ -13,7 +13,8 @@ class MonthBudget extends Component {
         date: new Date(),
         modal: false,
         categoryPlanned: "",
-        update: false
+        update: false,
+        budgetData: []
     }
 
     TableHeader = () => (
@@ -64,15 +65,15 @@ class MonthBudget extends Component {
                     <td>{this.state.budgetData.totalPlanned} zł</td>
                     <td>{this.state.budgetData.totalSpend} zł</td>
                     <td>{this.state.budgetData.totalEarned} zł</td>
-                    <td>{Math.round((this.state.budgetData.totalEarned - this.state.budgetData.totalSpend)*100)/100} zł</td>
+                    <td>{Math.round((this.state.budgetData.totalEarned - this.state.budgetData.totalSpend) * 100) / 100} zł</td>
                     <td><Progress color={this.calculateExpense() > 100 ? 'danger' : this.calculateExpense() > 85 ? "warning" : "success"} value={this.calculateExpense()} >{this.calculateExpense()} %</Progress></td>
                 </tr>
             }
         </tbody>
     );
 
-    calculateExpense(){
-      return Math.round((this.state.budgetData.totalSpend/this.state.budgetData.totalEarned)*100)
+    calculateExpense() {
+        return Math.round((this.state.budgetData.totalSpend / this.state.budgetData.totalEarned) * 100)
     }
 
     NavigationTab = () => (
@@ -108,15 +109,31 @@ class MonthBudget extends Component {
 
     updatePlannedValue = () => {
         let { categoryPlanned } = this.state
-        axios.post(`${url.BUDGET}?month=${this.props.month}`,
-            {
-                category: categoryPlanned.category,
-                planned: categoryPlanned.planned
+        axios({
+            headers: {
+                "Accept": 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            url: `${url.BUDGET}?month=${this.props.month}`,
+            data: JSON.stringify(categoryPlanned)
+        }).then(response =>
+            this.setState(state => {
+                const list = state.budgetData.budgets.map(item => {
+                    if (item.category === response.data.budgets[0].category) {
+                        return response.data.budgets[0]
+                    } else {
+                        return item
+                    }
+                });
+                const budget = state.budgetData
+                budget.budgets = list
+                budget.totalPlanned = response.data.totalPlanned
+                return {
+                    budgetData: budget,
+                }
             })
-            .then(response => this.setState({
-                budgetData: response.data,
-                isLoaded: true
-            }));
+        );
     }
 
     toggleSave = () => {
