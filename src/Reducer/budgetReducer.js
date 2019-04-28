@@ -3,7 +3,6 @@ const budgetReducer = (state = {
         budgets: []
     }
 }, action) => {
-    console.log('reducer', action)
     switch (action.type) {
         case 'SET_BUDGET':
             return {

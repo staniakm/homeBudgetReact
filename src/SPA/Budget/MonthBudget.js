@@ -115,8 +115,7 @@ class MonthBudget extends Component {
             method: 'PUT',
             url: `${url.BUDGET}?month=${this.props.month}`,
             data: JSON.stringify(categoryPlanned)
-        }).then(response => //this.props.setBudget(response.data)
-        {
+        }).then(response => {
             const budget = this.props.budgetData
             const list = budget.budgets.map(item => {
                 if (item.category === response.data.budgets[0].category) {
