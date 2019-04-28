@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import * as url from '../../Navigation/ulrs'
 import { connect } from 'react-redux';
-import { setMonth } from '../../Action'
-import { Table } from 'reactstrap';
+import { setMonth, setBudget } from '../../Action'
 import { withRouter } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
 import axios from 'axios';
 class MonthBudget extends Component {
 
@@ -14,7 +13,6 @@ class MonthBudget extends Component {
         modal: false,
         categoryPlanned: "",
         update: false,
-        budgetData: []
     }
 
     TableHeader = () => (
@@ -31,7 +29,7 @@ class MonthBudget extends Component {
 
     TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.budgetData.budgets.map(item => (
+            {this.state.isLoaded && this.props.budgetData.budgets.map(item => (
                 <tr className="oneRow" key={item.category} >
                     <td>{item.category}</td>
                     <td>{item.spent} zł</td>
@@ -59,13 +57,13 @@ class MonthBudget extends Component {
 
     TableSummaryBody = () => (
         <tbody>
-            {this.state.isLoaded &&
+            {this.props.budgetData &&
                 <tr className="oneRow" key={1} >
-                    <td>{this.state.budgetData.date}</td>
-                    <td>{this.state.budgetData.totalPlanned} zł</td>
-                    <td>{this.state.budgetData.totalSpend} zł</td>
-                    <td>{this.state.budgetData.totalEarned} zł</td>
-                    <td>{Math.round((this.state.budgetData.totalEarned - this.state.budgetData.totalSpend) * 100) / 100} zł</td>
+                    <td>{this.props.budgetData.date}</td>
+                    <td>{this.props.budgetData.totalPlanned} zł</td>
+                    <td>{this.props.budgetData.totalSpend} zł</td>
+                    <td>{this.props.budgetData.totalEarned} zł</td>
+                    <td>{Math.round((this.props.budgetData.totalEarned - this.props.budgetData.totalSpend) * 100) / 100} zł</td>
                     <td><Progress color={this.calculateExpense() > 100 ? 'danger' : this.calculateExpense() > 85 ? "warning" : "success"} value={this.calculateExpense()} >{this.calculateExpense()} %</Progress></td>
                 </tr>
             }
@@ -73,7 +71,7 @@ class MonthBudget extends Component {
     );
 
     calculateExpense() {
-        return Math.round((this.state.budgetData.totalSpend / this.state.budgetData.totalEarned) * 100)
+        return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100)
     }
 
     NavigationTab = () => (
@@ -117,23 +115,24 @@ class MonthBudget extends Component {
             method: 'PUT',
             url: `${url.BUDGET}?month=${this.props.month}`,
             data: JSON.stringify(categoryPlanned)
-        }).then(response =>
-            this.setState(state => {
-                const list = state.budgetData.budgets.map(item => {
-                    if (item.category === response.data.budgets[0].category) {
-                        return response.data.budgets[0]
-                    } else {
-                        return item
-                    }
-                });
-                const budget = state.budgetData
-                budget.budgets = list
-                budget.totalPlanned = response.data.totalPlanned
-                return {
-                    budgetData: budget,
+        }).then(response => //this.props.setBudget(response.data)
+        {
+            const budget = this.props.budgetData
+            const list = budget.budgets.map(item => {
+                if (item.category === response.data.budgets[0].category) {
+                    return response.data.budgets[0]
+                } else {
+                    return item
                 }
-            })
-        );
+            });
+            budget.budgets = list
+            budget.totalPlanned = response.data.totalPlanned
+
+            this.props.setBudget(
+                budget
+            )
+        }
+        ).then(d => this.setState({ isLoaded: true }));
     }
 
     toggleSave = () => {
@@ -155,10 +154,8 @@ class MonthBudget extends Component {
 
     loadData = (value) => {
         axios.get(`${url.BUDGET}?month=${value}`)
-            .then(response => this.setState({
-                budgetData: response.data,
-                isLoaded: true
-            }))
+            .then(response => this.props.setBudget(response.data))
+            .then(date => this.setState({ isLoaded: true }))
     }
 
     render() {
@@ -202,12 +199,14 @@ class MonthBudget extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        month: state.monthReducer.month
+        month: state.monthReducer.month,
+        budgetData: state.budgetReducer.budgetData
     }
 };
 
 const mapDispatchToProps = ({
-    setMonth: setMonth
+    setMonth,
+    setBudget
 });
 
 

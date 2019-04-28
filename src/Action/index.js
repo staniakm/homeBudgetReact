@@ -17,3 +17,8 @@ export const setShopItems = (shopItems) => ({
     type: 'SET_SHOP_ITEMS',
     shopItems
 })
+
+export const setBudget = (budgetData) => ({
+    type :'SET_BUDGET',
+    budgetData
+})
