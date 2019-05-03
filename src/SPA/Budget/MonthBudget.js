@@ -55,7 +55,7 @@ class MonthBudget extends Component {
         </thead>
     );
 
-    TableSummaryBody = () => (
+    TableSummaryBody = props => (
         <tbody>
             {this.props.budgetData &&
                 <tr className="oneRow" key={1} >
@@ -64,14 +64,15 @@ class MonthBudget extends Component {
                     <td>{this.props.budgetData.totalSpend} zł</td>
                     <td>{this.props.budgetData.totalEarned} zł</td>
                     <td>{Math.round((this.props.budgetData.totalEarned - this.props.budgetData.totalSpend) * 100) / 100} zł</td>
-                    <td><Progress color={this.calculateExpense() > 100 ? 'danger' : this.calculateExpense() > 85 ? "warning" : "success"} value={this.calculateExpense()} >{this.calculateExpense()} %</Progress></td>
+                    <td><Progress color={props.spendMoney > 100 ? 'danger' : props.spendMoney > 85 ? "warning" : "success"} value={props.spendMoney} >{props.spendMoney} %</Progress></td>
                 </tr>
             }
         </tbody>
     );
 
     calculateExpense() {
-        return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100)
+        if (this.props.budgetData.totalEarned===0) return 0
+        return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100) || 0
     }
 
     NavigationTab = () => (
@@ -131,7 +132,7 @@ class MonthBudget extends Component {
                 budget
             )
         }
-        ).then(d => this.setState({ isLoaded: true }));
+        ).then(() => this.setState({ isLoaded: true }));
     }
 
     toggleSave = () => {
@@ -154,22 +155,26 @@ class MonthBudget extends Component {
     loadData = (value) => {
         axios.get(`${url.BUDGET}?month=${value}`)
             .then(response => this.props.setBudget(response.data))
-            .then(date => this.setState({ isLoaded: true }))
+            .then(() => this.setState({ isLoaded: true }))
     }
 
     render() {
         return (
             <div>
                 <div>
+                {this.state.isLoaded &&
+                <React.Fragment>
                     <Table striped>
                         <this.TableSummaryHeader />
-                        <this.TableSummaryBody />
+                        <this.TableSummaryBody spendMoney={this.calculateExpense()} />
                     </Table>
                     <this.NavigationTab />
                     <Table striped>
                         <this.TableHeader />
                         <this.TableBody />
                     </Table>
+                    </React.Fragment>
+                }
                 </div>
 
                 <Modal isOpen={this.state.modal} >

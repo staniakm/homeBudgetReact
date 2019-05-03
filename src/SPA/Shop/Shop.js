@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { BASE_URL } from '../../Navigation/ulrs'
-import { Table } from 'reactstrap';
+import { Table ,Button} from 'reactstrap';
 import sorter from '../../Util/Sort'
+import {connect} from 'react-redux';
+import { setMonth, setBudget } from '../../Action';
 class Shop extends Component {
 
     state = {
         isLoaded: false,
-        data: []
+        data: [],
     }
 
     sortBy(key){
@@ -22,8 +24,8 @@ class Shop extends Component {
         <thead>
             <tr className="oneRow sortable">
                 <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
-                <th scope="col" onClick={() => this.sortBy('monthSum')}>Wydane w tym miesiącu</th>
-                <th scope="col" onClick={() => this.sortBy('yearSum')}>Wydane w tym roku</th>
+                <th scope="col" onClick={() => this.sortBy('monthSum')}>Wydane w {this.props.monthValue}</th>
+                <th scope="col" onClick={() => this.sortBy('yearSum')}>Wydane od poczatku {this.props.monthValue.substring(0, 4)} r.</th>
             </tr>
         </thead>
     );
@@ -33,7 +35,7 @@ class Shop extends Component {
             {this.state.isLoaded && this.state.data.map(item => (
                 <tr className="oneRow clickable" key={item.shopId} >
                     <td onClick={() => this.onShopClick(item)}>{item.name}</td>
-                    <td onClick={() => this.onShopMonthSpendClick(item)}>{item.monthSum}</td>
+                    <td onClick={() => this.onShopMonthSpendClick(item)} onHov>{item.monthSum}</td>
                     <td onClick={() => this.onShopYearSpendClick(item)}>{item.yearSum}</td>
                 </tr>
             )
@@ -54,18 +56,37 @@ class Shop extends Component {
     }
 
     componentDidMount() {
-        fetch(BASE_URL + "shop")
-            .then(response => response.json())
-            .then(data => this.setState({
-                data: data,
-                isLoaded: true
-            }))
+        this.loadData(0)
+    }
+
+    loadData = month => {
+        fetch(BASE_URL + `shop?month=${month}`)
+        .then(response => response.json())
+        .then(data => this.setState({
+            data: data,
+            isLoaded: true
+        }))
+    }
+
+    NavigationTab = () => (
+        <div className="rowC">
+            <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
+            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
+        </div>
+    )
+
+    changeMonth = (value) => {
+        const month = (value === 0) ? 0 : this.props.month + value
+        this.props.setMonth(month);
+        this.loadData(month)
     }
 
     render() {
         return (
             <div>
-                <h1>Sklepy</h1>
+                {/* <h1>Sklepy {this.props.monthValue}</h1> */}
+                <this.NavigationTab />
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
@@ -75,4 +96,17 @@ class Shop extends Component {
     }
 }
 
-export default Shop
+const mapStateToProps = (state) => {
+    return {
+        month: state.monthReducer.month,
+        monthValue: state.monthReducer.monthValue,
+        budgetData: state.budgetReducer.budgetData
+    }
+};
+
+const mapDispatchToProps = ({
+    setMonth,
+    setBudget
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Shop)

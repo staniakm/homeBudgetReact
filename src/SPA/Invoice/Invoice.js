@@ -25,6 +25,7 @@ class Invoice extends Component {
                 <th scope="col">Sklep</th>
                 <th scope="col">Data</th>
                 <th scope="col">Cena</th>
+                <th scope="col">Konto</th>
             </tr>
         </thead>
     );
@@ -36,6 +37,7 @@ class Invoice extends Component {
                     <td>{item.name}</td>
                     <td>{item.date}</td>
                     <td>{item.price} zł</td>
+                    <td>{item.account}</td>
                 </tr>
             )
             )}
@@ -67,9 +69,7 @@ class Invoice extends Component {
     render() {
         return (
             <div>
-                <h1>Paragony</h1>
                 <this.NavigationTab />
-                {/* <table className="invoicesListTable table full-width"> */}
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />
