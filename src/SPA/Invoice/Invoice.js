@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import * as url from '../../Navigation/ulrs'
 import { connect } from 'react-redux';
 import { setMonth } from '../../Action'
-import { Table, Button } from 'reactstrap';
-
+import { Table } from 'reactstrap';
+import NavigationTab from '../common/NavigationTab'
 class Invoice extends Component {
     state = {
         isLoaded: false,
@@ -44,22 +44,8 @@ class Invoice extends Component {
         </tbody>
     );
 
-    NavigationTab = () => (
-        <div className="rowC">
-        <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
-        </div>
-    )
-
     onItemClick = (item) => {
         this.props.history.push(`/invoice/${item.listId}`)
-    }
-
-    changeMonth = (value) => {
-        const month = (value === 0) ? 0 : this.props.month + value
-        this.props.setMonth(month);
-        this.loadData(month)
     }
 
     componentDidMount() {
@@ -69,7 +55,7 @@ class Invoice extends Component {
     render() {
         return (
             <div>
-                <this.NavigationTab />
+                <NavigationTab onclick={this.loadData}/>
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />

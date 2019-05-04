@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { BASE_URL } from '../../Navigation/ulrs'
-import { Table ,Button} from 'reactstrap';
+import { Table} from 'reactstrap';
 import sorter from '../../Util/Sort'
 import {connect} from 'react-redux';
 import { setMonth, setBudget } from '../../Action';
+import NavigationTab from '../common/NavigationTab'
 class Shop extends Component {
 
     state = {
@@ -35,7 +36,7 @@ class Shop extends Component {
             {this.state.isLoaded && this.state.data.map(item => (
                 <tr className="oneRow clickable" key={item.shopId} >
                     <td onClick={() => this.onShopClick(item)}>{item.name}</td>
-                    <td onClick={() => this.onShopMonthSpendClick(item)} onHov>{item.monthSum}</td>
+                    <td onClick={() => this.onShopMonthSpendClick(item)} >{item.monthSum}</td>
                     <td onClick={() => this.onShopYearSpendClick(item)}>{item.yearSum}</td>
                 </tr>
             )
@@ -56,7 +57,7 @@ class Shop extends Component {
     }
 
     componentDidMount() {
-        this.loadData(0)
+        this.loadData(this.props.month)
     }
 
     loadData = month => {
@@ -68,25 +69,10 @@ class Shop extends Component {
         }))
     }
 
-    NavigationTab = () => (
-        <div className="rowC">
-            <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
-        </div>
-    )
-
-    changeMonth = (value) => {
-        const month = (value === 0) ? 0 : this.props.month + value
-        this.props.setMonth(month);
-        this.loadData(month)
-    }
-
     render() {
         return (
             <div>
-                {/* <h1>Sklepy {this.props.monthValue}</h1> */}
-                <this.NavigationTab />
+                <NavigationTab onclick={this.loadData}/>
                 <Table striped>
                     <this.TableHeader />
                     <this.TableBody />

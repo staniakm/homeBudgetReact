@@ -5,6 +5,7 @@ import { setMonth, setBudget } from '../../Action'
 import { withRouter } from 'react-router-dom';
 import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
 import axios from 'axios';
+import NavigationTab from '../common/NavigationTab'
 class MonthBudget extends Component {
 
     state = {
@@ -73,20 +74,6 @@ class MonthBudget extends Component {
     calculateExpense() {
         if (this.props.budgetData.totalEarned===0) return 0
         return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100) || 0
-    }
-
-    NavigationTab = () => (
-        <div className="rowC">
-            <Button outline color="success" onClick={() => this.changeMonth(-1)}>Poprzedni miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(0)}>Obecny miesiąc</Button>
-            <Button outline color="success" onClick={() => this.changeMonth(1)}>Następny miesiąc</Button>
-        </div>
-    )
-
-    changeMonth = (value) => {
-        const month = (value === 0) ? 0 : this.props.month + value
-        this.props.setMonth(month);
-        this.loadData(month)
     }
 
     componentDidMount() {
@@ -168,7 +155,7 @@ class MonthBudget extends Component {
                         <this.TableSummaryHeader />
                         <this.TableSummaryBody spendMoney={this.calculateExpense()} />
                     </Table>
-                    <this.NavigationTab />
+                    <NavigationTab onclick={this.loadData}/>
                     <Table striped>
                         <this.TableHeader />
                         <this.TableBody />
