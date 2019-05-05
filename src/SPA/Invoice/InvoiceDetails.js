@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = ({
-    selectProduct: selectProduct
+    selectProduct
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InvoiceDetails))

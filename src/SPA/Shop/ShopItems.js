@@ -58,7 +58,7 @@ class ShopItems extends Component {
     render() {
         return (
             <div>
-                <h1>Sklep - podsumowanie</h1>
+                <h2>Sklep - produkty</h2>
                 <table className="invoicesListTable table full-width">
                     <this.TableHeader />
                     <this.TableBody />
@@ -76,8 +76,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = ({
-    selectProduct: selectProduct,
-    setShopItems: setShopItems
+    selectProduct,
+    setShopItems
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShopItems))
