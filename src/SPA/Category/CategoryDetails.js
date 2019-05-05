@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as url from '../../Navigation/ulrs'
 import { Table } from 'reactstrap';
 import axios from 'axios';
-class CategoryDetails extends Component {
 
-    state = {
-        isLoaded: false,
-        data: []
-    }
+const CategoryDetails = props => {
 
-    TableHeader = () => (
+    const [ isLoaded, setIsLoaded ] = useState(false)
+    const [ data, setData ] = useState({})
+
+    const TableHeader = () => (
         <thead>
             <tr className="oneRow">
                 <th scope="col">Nazwa</th>
@@ -18,9 +17,9 @@ class CategoryDetails extends Component {
         </thead>
     );
 
-    TableBody = () => (
+    const TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.data.details.map(item => (
+            {isLoaded && data.details.map(item => (
                 <tr className="oneRow" key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.price}</td>
@@ -30,25 +29,29 @@ class CategoryDetails extends Component {
         </tbody>
     );
 
-    componentDidMount() {
-        axios.get(url.CATEGORY + this.props.id)
-            .then(res => this.setState({
-                data: res.data,
-                isLoaded: true
-            }))
-    };
-
-    render() {
-        return (
-            <div>
-                <h3>Wydatki w kategorii {this.state.data.name} w obecnym miesiącu wyniosły {this.state.data.monthSummary} zł</h3>
-                <Table striped>
-                    <this.TableHeader />
-                    <this.TableBody />
-                </Table>
-            </div>
-        )
+    const fetchData = () => {
+        setIsLoaded(false)
+        axios.get(url.CATEGORY + props.id)
+            .then(res => {
+                setData(res.data)
+                setIsLoaded(true)
+            })
     }
+
+    useEffect(() => {
+        fetchData()
+        console.log("fetching data")
+    },[])
+
+    return (
+        <div>
+            <h3>Wydatki w kategorii {data.name} w obecnym miesiącu wyniosły {data.monthSummary} zł</h3>
+            <Table striped>
+                <TableHeader />
+                <TableBody />
+            </Table>
+        </div>
+    )
 }
 
 export default CategoryDetails
