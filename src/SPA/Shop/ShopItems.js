@@ -50,7 +50,7 @@ class ShopItems extends Component {
         axios.get(`${BASE_URL}${path}`)
             .then(response => response.data)
             .then(data => (this.props.setShopItems(data)))
-            .then(data => this.setState({
+            .then(() => this.setState({
                 isLoaded: true
             }))
     }

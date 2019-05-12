@@ -9,6 +9,7 @@ const NavigationPanel = () => {
             <li><NavLink to="/category">Kategorie</NavLink></li>
             <li><NavLink to="/shop">Sklepy</NavLink></li>
             <li><NavLink to="/budget">Budżet</NavLink></li>
+            <li><NavLink to="/account">Konta</NavLink></li>
             <li><NavLink to="/charts">Wykresy</NavLink></li>
         </ul>
     )
