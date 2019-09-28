@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'reactstrap'
 import {connect} from 'react-redux';
-import { setMonth, setBudget } from '../../Action';
+import { setMonth, setBudget } from '../../actions';
 
 const NavigationTab = props => {
 

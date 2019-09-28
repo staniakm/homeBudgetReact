@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import * as url from '../../Navigation/ulrs'
+import * as url from '../../common/ulrs'
 import { connect } from 'react-redux';
-import { setMonth } from '../../Action'
+import { setMonth } from '../../actions'
 import { Table } from 'reactstrap';
-import NavigationTab from '../common/NavigationTab'
+import NavigationTab from '../../components/Navigation/NavigationTab'
 class Invoice extends Component {
     state = {
         isLoaded: false,

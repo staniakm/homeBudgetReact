@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import {Router} from './router'
-import {store} from './store'
+import './assets/styles/index.css';
+import * as serviceWorker from './js/common/serviceWorker';
+import {Router} from './js/common/router'
+import {store} from './js/common/store'
 import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

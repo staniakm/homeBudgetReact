@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import './App.css';
-import NavigationPanel from './Navigation/NavigationPanel'
+import '../../assets/styles/App.css';
+import NavigationPanel from '../components/Navigation/NavigationPanel'
 
 class App extends Component {
 

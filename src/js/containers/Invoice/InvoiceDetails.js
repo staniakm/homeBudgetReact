@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import * as url from '../../Navigation/ulrs'
+import * as url from '../../common/ulrs'
 import { withRouter } from 'react-router'
 import IDTable from './InvoiceDetailsActions'
 import { connect } from 'react-redux';
-import {selectProduct} from '../../Action'
+import {selectProduct} from '../../actions'
 class InvoiceDetails extends Component {
     state = {
         isLoaded: false,

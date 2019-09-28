@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../Navigation/ulrs'
+import { BASE_URL } from '../../common/ulrs'
 import { withRouter } from 'react-router'
 import axios from 'axios';
 import { Table } from 'reactstrap';
-import {selectProduct} from '../Action'
+import {selectProduct} from '../../actions'
 import {connect} from 'react-redux'
 class ItemDetails extends Component {
     state = {

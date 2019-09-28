@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import * as url from '../../Navigation/ulrs'
+import * as url from '../../common/ulrs'
 import { Table } from 'reactstrap';
 import axios from 'axios';
 

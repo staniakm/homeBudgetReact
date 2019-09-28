@@ -1,17 +1,17 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import App from './App'
-import Home from './SPA/Home'
-import Invoice from './SPA/Invoice/Invoice'
-import InvoiceDetails from './SPA/Invoice/InvoiceDetails'
-import Category from './SPA/Category/Category';
-import CategoryDetails from './SPA/Category/CategoryDetails'
-import ItemDetails from './SPA/ItemDetails'
-import Shop from './SPA/Shop/Shop'
-import ShopItems from './SPA/Shop/ShopItems'
-import MonthSpendingChart from './SPA/Charts/MonthSpendingCharts'
-import MonthBudget from './SPA/Budget/MonthBudget';
-import Account from './SPA/Account/Account'
+import App from '../containers/App'
+import Home from '../components/Home/Home'
+import Invoice from '../containers/Invoice/Invoice'
+import InvoiceDetails from '../containers/Invoice/InvoiceDetails'
+import Category from '../containers/Category/Category';
+import CategoryDetails from '../containers/Category/CategoryDetails'
+import ItemDetails from '../containers/ItemDetails/ItemDetails'
+import Shop from '../containers/Shop/Shop'
+import ShopItems from '../containers/Shop/ShopItems'
+import MonthSpendingChart from '../components/Charts/MonthSpendingCharts'
+import MonthBudget from '../containers/Budget/MonthBudget';
+import Account from '../components/Account/Account'
 
 export const Router = () => (
     <BrowserRouter>

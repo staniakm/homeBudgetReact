@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import * as url from '../../Navigation/ulrs'
-import sorter from '../../Util/Sort'
+import * as url from '../../common/ulrs'
+import sorter from '../../common/Util/Sort'
 import { Table } from 'reactstrap';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import { setMonth} from '../../Action';
-import NavigationTab   from '../common/NavigationTab'
+import { setMonth} from '../../actions';
+import NavigationTab   from '../../components/Navigation/NavigationTab'
 
 class Category extends Component {
 

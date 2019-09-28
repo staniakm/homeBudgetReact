@@ -1,4 +1,5 @@
-import moment from 'moment'
+import moment from '../../../node_modules/moment'
+
 const setDate = date => {
     return moment(new Date()).add(date, 'month').format("YYYY-MM")
 }

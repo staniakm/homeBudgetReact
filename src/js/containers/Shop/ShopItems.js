@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { BASE_URL } from '../../Navigation/ulrs'
+import { BASE_URL } from '../../common/ulrs'
 import { withRouter } from 'react-router'
-import { selectProduct, setShopItems } from '../../Action'
+import { selectProduct, setShopItems } from '../../actions'
 import { connect } from 'react-redux'
 import axios from 'axios';
 

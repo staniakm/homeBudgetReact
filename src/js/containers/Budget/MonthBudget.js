@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import * as url from '../../Navigation/ulrs'
+import * as url from '../../common/ulrs'
 import { connect } from 'react-redux';
-import { setMonth, setBudget } from '../../Action'
+import { setMonth, setBudget } from '../../actions'
 import { withRouter } from 'react-router-dom';
 import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
 import axios from 'axios';
-import NavigationTab from '../common/NavigationTab'
+import NavigationTab from '../../components/Navigation/NavigationTab'
 class MonthBudget extends Component {
 
     state = {
