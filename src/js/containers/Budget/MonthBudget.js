@@ -3,7 +3,7 @@ import * as url from '../../common/ulrs'
 import { connect } from 'react-redux';
 import { setMonth, setBudget } from '../../actions'
 import { withRouter } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup } from 'reactstrap';
 import axios from 'axios';
 import NavigationTab from '../../components/Navigation/NavigationTab'
 import MonthBudgetDetails from './MonthBudgetDetails'
@@ -16,11 +16,6 @@ class MonthBudget extends Component {
         modal: false,
         categoryPlanned: "",
         update: false,
-    }
-
-    calculateExpense() {
-        if (this.props.budgetData.totalEarned === 0) return 0
-        return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100) || 0
     }
 
     componentDidMount() {
@@ -42,6 +37,7 @@ class MonthBudget extends Component {
 
     updatePlannedValue = () => {
         let { categoryPlanned } = this.state
+        console.log(categoryPlanned)
         axios({
             headers: {
                 "Accept": 'application/json',
@@ -98,12 +94,11 @@ class MonthBudget extends Component {
                 <div>
                     {this.state.isLoaded &&
                         <React.Fragment>
+                            <NavigationTab onclick={this.loadData} />
                             <MonthBudgetSummary
                                 calculateExpense={this.calculateExpense}
                                 budgetData={this.props.budgetData}
                             />
-
-                            <NavigationTab onclick={this.loadData} />
                             <MonthBudgetDetails
                                 budgets={this.props.budgetData.budgets}
                                 editBudget={this.editBudget}

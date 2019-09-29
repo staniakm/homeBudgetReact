@@ -2,12 +2,15 @@ import React from 'react'
 import { Table, Progress } from 'reactstrap'
 
 const monthBudgetSummary = props => {
-
+    const calculateExpense = () => {
+        if (props.budgetData.totalEarned === 0) return 0
+        return Math.round((props.budgetData.totalSpend / props.budgetData.totalEarned) * 100) || 0
+    }
     return (
         <Table striped>
             <TableSummaryHeader />
             <TableSummaryBody
-                spendMoney={props.calculateExpense}
+                spendMoney={calculateExpense()}
                 budgetData={props.budgetData}
             />
         </Table>
@@ -28,6 +31,7 @@ const TableSummaryHeader = () => (
 );
 
 const TableSummaryBody = props => (
+    
     <tbody>
         {
             <tr className="oneRow" key={1} >
