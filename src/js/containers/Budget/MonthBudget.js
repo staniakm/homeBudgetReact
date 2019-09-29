@@ -3,9 +3,11 @@ import * as url from '../../common/ulrs'
 import { connect } from 'react-redux';
 import { setMonth, setBudget } from '../../actions'
 import { withRouter } from 'react-router-dom';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup, Progress } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup} from 'reactstrap';
 import axios from 'axios';
 import NavigationTab from '../../components/Navigation/NavigationTab'
+import MonthBudgetDetails from './MonthBudgetDetails'
+import MonthBudgetSummary from './MonthBudgetSummary'
 class MonthBudget extends Component {
 
     state = {
@@ -16,63 +18,8 @@ class MonthBudget extends Component {
         update: false,
     }
 
-    TableHeader = () => (
-        <thead>
-            <tr className="oneRow">
-                <th scope="col">Kategoria</th>
-                <th scope="col">Wydane</th>
-                <th scope="col">Zaplanowane</th>
-                <th scope="col">Wykorzystanie planu</th>
-                <th scope="col">Operacja</th>
-            </tr>
-        </thead>
-    );
-
-    TableBody = () => (
-        <tbody>
-            {this.state.isLoaded && this.props.budgetData.budgets.map(item => (
-                <tr className="oneRow" key={item.category} >
-                    <td>{item.category}</td>
-                    <td>{item.spent} zł</td>
-                    <td>{item.planned} zł</td>
-                    <td><Progress color={item.percentage > 100 ? 'danger' : item.percentage > 85 ? "warning" : "success"} value={item.percentage} >{item.percentage} %</Progress></td>
-                    <td><Button outline color="success" onClick={() => this.editBudget(item)}>Edytuj</Button></td>
-                </tr>
-            )
-            )}
-        </tbody>
-    );
-
-    TableSummaryHeader = () => (
-        <thead>
-            <tr className="oneRow">
-                <th scope="col">Budżet</th>
-                <th scope="col">Zaplanowane</th>
-                <th scope="col">Wydane</th>
-                <th scope="col">Przychód</th>
-                <th scope="col">Oszczędności</th>
-                <th>% wydanych pieniędzy</th>
-            </tr>
-        </thead>
-    );
-
-    TableSummaryBody = props => (
-        <tbody>
-            {this.props.budgetData &&
-                <tr className="oneRow" key={1} >
-                    <td>{this.props.budgetData.date}</td>
-                    <td>{this.props.budgetData.totalPlanned} zł</td>
-                    <td>{this.props.budgetData.totalSpend} zł</td>
-                    <td>{this.props.budgetData.totalEarned} zł</td>
-                    <td>{Math.round((this.props.budgetData.totalEarned - this.props.budgetData.totalSpend) * 100) / 100} zł</td>
-                    <td><Progress color={props.spendMoney > 100 ? 'danger' : props.spendMoney > 85 ? "warning" : "success"} value={props.spendMoney} >{props.spendMoney} %</Progress></td>
-                </tr>
-            }
-        </tbody>
-    );
-
     calculateExpense() {
-        if (this.props.budgetData.totalEarned===0) return 0
+        if (this.props.budgetData.totalEarned === 0) return 0
         return Math.round((this.props.budgetData.totalSpend / this.props.budgetData.totalEarned) * 100) || 0
     }
 
@@ -149,19 +96,20 @@ class MonthBudget extends Component {
         return (
             <div>
                 <div>
-                {this.state.isLoaded &&
-                <React.Fragment>
-                    <Table striped>
-                        <this.TableSummaryHeader />
-                        <this.TableSummaryBody spendMoney={this.calculateExpense()} />
-                    </Table>
-                    <NavigationTab onclick={this.loadData}/>
-                    <Table striped>
-                        <this.TableHeader />
-                        <this.TableBody />
-                    </Table>
-                    </React.Fragment>
-                }
+                    {this.state.isLoaded &&
+                        <React.Fragment>
+                            <MonthBudgetSummary
+                                calculateExpense={this.calculateExpense}
+                                budgetData={this.props.budgetData}
+                            />
+
+                            <NavigationTab onclick={this.loadData} />
+                            <MonthBudgetDetails
+                                budgets={this.props.budgetData.budgets}
+                                editBudget={this.editBudget}
+                            />
+                        </React.Fragment>
+                    }
                 </div>
 
                 <Modal isOpen={this.state.modal} >

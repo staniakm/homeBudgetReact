@@ -6,7 +6,7 @@ import * as url from '../../common/ulrs'
 import {connect} from 'react-redux'
 import { setMonth} from '../../actions';
 
-class accountDetails extends Component {
+class AccountDetails extends Component {
 
     state = {
         accounts: [],
@@ -76,4 +76,4 @@ const mapDispatchToProps = ({
     setMonth,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (accountDetails)
+export default connect(mapStateToProps, mapDispatchToProps) (AccountDetails)

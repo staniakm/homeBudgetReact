@@ -11,7 +11,7 @@ import Shop from '../containers/Shop/Shop'
 import ShopItems from '../containers/Shop/ShopItems'
 import MonthSpendingChart from '../components/Charts/MonthSpendingCharts'
 import MonthBudget from '../containers/Budget/MonthBudget';
-import Account from '../components/Account/Account'
+import AccountDetails from '../containers/AccountDetails/AccountDetails'
 
 export const Router = () => (
     <BrowserRouter>
@@ -23,7 +23,7 @@ export const Router = () => (
                 <Route exact path={"/budget"} component={MonthBudget} />
                 <Route exact path={"/category"} component={Category} />
                 <Route exact path={"/shop"} component={Shop}/>
-                <Route exact path={"/account"} component={Account}/>
+                <Route exact path={"/account"} component={AccountDetails}/>
                 <Route exact path={"/invoice/:id"}
                     render={(props) => <InvoiceDetails id={props.match.params.id} />}
                     name="invoiceDetails" />
