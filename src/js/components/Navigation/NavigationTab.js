@@ -14,7 +14,7 @@ const NavigationTab = props => {
         <div className="rowC">
             <Button outline color="success" onClick={() => changeMonth(-1)}>Poprzedni miesiąc</Button>
             <Button outline color="success" onClick={() => changeMonth(0)}>Obecny miesiąc</Button>
-            <Button outline color="success" onClick={() => changeMonth(1)}>Następny miesiąc</Button>
+            <Button  disabled={props.month === 0} outline color="success" onClick={() => changeMonth(1)}>Następny miesiąc</Button>
         </div>
     )
 }
