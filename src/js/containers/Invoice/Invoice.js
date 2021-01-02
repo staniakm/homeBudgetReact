@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { setMonth } from '../../actions'
 import { Table } from 'reactstrap';
 import NavigationTab from '../../components/Navigation/NavigationTab'
+import {formatCurrency} from '../../common/CurrencyFormat'
+
+
+
 class Invoice extends Component {
     state = {
         isLoaded: false,
@@ -23,8 +27,8 @@ class Invoice extends Component {
         <thead>
             <tr className="tableHeaderColumn oneRow">
                 <th scope="col">Sklep</th>
-                <th scope="col">Data</th>
-                <th scope="col">Cena</th>
+                <th scope="col">Data {this.props.monthValue}</th>
+                <th scope="col">Suma</th>
                 <th scope="col">Konto</th>
             </tr>
         </thead>
@@ -36,7 +40,7 @@ class Invoice extends Component {
                 <tr className="oneRow clickable" key={item.listId} onClick={() => this.onItemClick(item)}>
                     <td>{item.name}</td>
                     <td>{item.date}</td>
-                    <td>{item.price} zł</td>
+                    <td>{formatCurrency(item.price)}</td>
                     <td>{item.account}</td>
                 </tr>
             )
@@ -68,7 +72,8 @@ class Invoice extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        month: state.monthReducer.month
+        month: state.monthReducer.month,
+        monthValue: state.monthReducer.monthValue,
     }
 };
 

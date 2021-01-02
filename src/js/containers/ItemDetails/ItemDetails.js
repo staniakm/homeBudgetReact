@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Table } from 'reactstrap';
 import {selectProduct} from '../../actions'
 import {connect} from 'react-redux'
+import {formatCurrency} from '../../common/CurrencyFormat'
+
 class ItemDetails extends Component {
     state = {
         items: [],
@@ -30,10 +32,10 @@ class ItemDetails extends Component {
                 <tr className="oneRow" key={item.invoiceItemId}>
                     <td>{item.shopName}</td>
                     <td>{item.invoiceDate}</td>
-                    <td>{item.itemPrice}</td>
+                    <td>{formatCurrency(item.itemPrice)}</td>
                     <td>{item.quantity}</td>
-                    <td>{item.discount}</td>
-                    <td>{item.totalSum}</td>
+                    <td>{formatCurrency(item.discount)}</td>
+                    <td>{formatCurrency(item.totalSum)}</td>
                 </tr>
             )
             )}

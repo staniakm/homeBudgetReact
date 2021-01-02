@@ -6,6 +6,7 @@ import axios from 'axios';
 import {connect} from 'react-redux'
 import { setMonth} from '../../actions';
 import NavigationTab   from '../../components/Navigation/NavigationTab'
+import {formatCurrency} from '../../common/CurrencyFormat'
 
 class Category extends Component {
 
@@ -39,8 +40,8 @@ class Category extends Component {
             {this.state.isLoaded && this.state.data.map(item => (
                 <tr className="oneRow clickable" key={item.id} onClick={() => this.onCategoryClick(item.id)}>
                     <td>{item.name}</td>
-                    <td>{item.monthSummary}</td>
-                    <td>{item.yearSummary}</td>
+                    <td>{formatCurrency(item.monthSummary)}</td>
+                    <td>{formatCurrency(item.yearSummary)}</td>
                 </tr>
             )
             )}

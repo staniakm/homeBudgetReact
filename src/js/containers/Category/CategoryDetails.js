@@ -4,6 +4,7 @@ import { Table } from 'reactstrap';
 import axios from 'axios';
 import {setMonth} from "../../actions";
 import {connect} from "react-redux";
+import {formatCurrency} from "../../common/CurrencyFormat";
 
 const CategoryDetails = props => {
 
@@ -24,7 +25,7 @@ const CategoryDetails = props => {
             {isLoaded && data.details.map(item => (
                 <tr className="oneRow" key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.price}</td>
+                    <td>{formatCurrency(item.price)}</td>
                 </tr>
             )
             )}
@@ -37,7 +38,9 @@ const CategoryDetails = props => {
             .then(res => {
                 setData(res.data)
                 setIsLoaded(true)
-            })
+            }).catch(e=> console.log("Error fetching category details"))
+
+
     }
 
     useEffect(() => {

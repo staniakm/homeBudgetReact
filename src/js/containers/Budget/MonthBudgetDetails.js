@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table, Progress, Button } from 'reactstrap'
+import {formatCurrency} from '../../common/CurrencyFormat'
 
 
 const monthBudgetDetails = props => {
@@ -29,8 +30,8 @@ const TableBody = (props) => (
         {props.budgets.map(item => (
             <tr className="oneRow" key={item.category} >
                 <td>{item.category}</td>
-                <td>{item.spent} zł</td>
-                <td>{item.planned} zł</td>
+                <td>{formatCurrency(item.spent)}</td>
+                <td>{formatCurrency(item.planned)}</td>
                 <td><Progress color={item.percentage > 100 ? 'danger' : item.percentage > 85 ? "warning" : "success"} value={item.percentage} >{item.percentage} %</Progress></td>
                 <td><Button outline color="success" onClick={() => props.editBudget(item)}>Edytuj</Button></td>
             </tr>

@@ -5,6 +5,10 @@ import sorter from '../../common/Util/Sort'
 import {connect} from 'react-redux';
 import { setMonth, setBudget } from '../../actions';
 import NavigationTab from '../../components/Navigation/NavigationTab'
+import {formatCurrency} from '../../common/CurrencyFormat'
+
+
+
 class Shop extends Component {
 
     state = {
@@ -36,8 +40,8 @@ class Shop extends Component {
             {this.state.isLoaded && this.state.data.map(item => (
                 <tr className="oneRow clickable" key={item.shopId} >
                     <td onClick={() => this.onShopClick(item)}>{item.name}</td>
-                    <td onClick={() => this.onShopMonthSpendClick(item)} >{item.monthSum}</td>
-                    <td onClick={() => this.onShopYearSpendClick(item)}>{item.yearSum}</td>
+                    <td onClick={() => this.onShopMonthSpendClick(item)} >{formatCurrency(item.monthSum)}</td>
+                    <td onClick={() => this.onShopYearSpendClick(item)}>{formatCurrency(item.yearSum)}</td>
                 </tr>
             )
             )}

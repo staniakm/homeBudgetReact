@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table, Progress } from 'reactstrap'
+import {formatCurrency} from '../../common/CurrencyFormat'
 
 const monthBudgetSummary = ({budgetData}) => {
     const calculateExpense = () => {
@@ -36,10 +37,10 @@ const TableSummaryBody = ({budgetData,spendMoney}) => (
         {
             <tr className="oneRow" key={1} >
                 <td>{budgetData.date}</td>
-                <td>{budgetData.totalPlanned} zł</td>
-                <td>{budgetData.totalSpend} zł</td>
-                <td>{budgetData.totalEarned} zł</td>
-                <td>{Math.round((budgetData.totalEarned - budgetData.totalSpend) * 100) / 100} zł</td>
+                <td>{formatCurrency(budgetData.totalPlanned)}</td>
+                <td>{formatCurrency(budgetData.totalSpend)}</td>
+                <td>{formatCurrency(budgetData.totalEarned)}</td>
+                <td>{formatCurrency(Math.round((budgetData.totalEarned - budgetData.totalSpend) * 100) / 100)}</td>
                 <td><Progress color={spendMoney > 100 ? 'danger' : spendMoney > 85 ? "warning" : "success"} value={spendMoney} >{spendMoney} %</Progress></td>
             </tr>
         }
