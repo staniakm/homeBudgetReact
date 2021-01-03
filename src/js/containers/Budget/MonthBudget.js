@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as url from '../../common/ulrs'
-import { connect } from 'react-redux';
-import { setMonth, setBudget } from '../../actions'
-import { withRouter } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormGroup } from 'reactstrap';
+import {connect} from 'react-redux';
+import {setBudget, setMonth} from '../../actions'
+import {withRouter} from 'react-router-dom';
+import {Button, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import axios from 'axios';
 import NavigationTab from '../../components/Navigation/NavigationTab'
 import MonthBudgetDetails from './MonthBudgetDetails'
 import MonthBudgetSummary from './MonthBudgetSummary'
+
 class MonthBudget extends Component {
 
     state = {
@@ -37,7 +38,6 @@ class MonthBudget extends Component {
 
     updatePlannedValue = () => {
         let { categoryPlanned } = this.state
-        console.log(categoryPlanned)
         axios({
             headers: {
                 "Accept": 'application/json',
@@ -48,14 +48,13 @@ class MonthBudget extends Component {
             data: JSON.stringify(categoryPlanned)
         }).then(response => {
             const budget = this.props.budgetData
-            const list = budget.budgets.map(item => {
+                budget.budgets = budget.budgets.map(item => {
                 if (item.category === response.data.budgets[0].category) {
                     return response.data.budgets[0]
                 } else {
                     return item
                 }
-            });
-            budget.budgets = list
+            })
             budget.totalPlanned = response.data.totalPlanned
 
             this.props.setBudget(

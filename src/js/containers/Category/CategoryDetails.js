@@ -45,7 +45,6 @@ const CategoryDetails = props => {
 
     useEffect(() => {
         fetchData()
-        console.log("fetching data")
     },[])
 
     return (
