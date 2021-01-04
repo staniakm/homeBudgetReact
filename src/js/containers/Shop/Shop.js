@@ -53,7 +53,7 @@ class Shop extends Component {
     }
 
     onShopMonthSpendClick = (shop) => {
-        this.props.history.push(`/shop/${shop.shopId}/month`)
+        this.props.history.push(`shop/${shop.shopId}/month`)
     }
 
     onShopYearSpendClick = (shop) => {

@@ -47,7 +47,7 @@ class ShopItems extends Component {
 
     componentDidMount() {
         const path = this.props.location.pathname
-        axios.get(`${BASE_URL}${path}`)
+        axios.get(`${BASE_URL}${path}?month=${this.props.month}`)
             .then(response => response.data)
             .then(data => (this.props.setShopItems(data)))
             .then(() => this.setState({
@@ -71,7 +71,8 @@ class ShopItems extends Component {
 const mapStateToProps = (state) => {
     return {
         product: state.invoiceReducer.product,
-        shopItems: state.shopReducer.shopItems
+        shopItems: state.shopReducer.shopItems,
+        month: state.monthReducer.month
     }
 };
 
