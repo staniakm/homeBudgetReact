@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as url from '../../common/ulrs'
 import sorter from '../../common/Util/Sort'
-import { Table } from 'reactstrap';
+import {Table} from 'reactstrap';
 import axios from 'axios';
 import {connect} from 'react-redux'
-import { setMonth} from '../../actions';
-import NavigationTab   from '../../components/Navigation/NavigationTab'
+import {setMonth} from '../../actions';
+import NavigationTab from '../../components/Navigation/NavigationTab'
 import {formatCurrency} from '../../common/CurrencyFormat'
+import {FaSearch,FaList} from 'react-icons/fa';
+
 
 class Category extends Component {
 
@@ -17,7 +19,7 @@ class Category extends Component {
     }
 
     sortBy(key) {
-        const { data, ascOrder } = this.state
+        const {data, ascOrder} = this.state
         const sorted = sorter(key, data, ascOrder)
         this.setState({
             data: sorted,
@@ -27,24 +29,28 @@ class Category extends Component {
 
     TableHeader = () => (
         <thead>
-            <tr className="oneRow sortable">
-                <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
-                <th scope="col" onClick={() => this.sortBy('monthSummary')}>Koszt w {this.props.monthValue} (zł)</th>
-                <th scope="col" onClick={() => this.sortBy('yearSummary')}>Koszt w {this.props.monthValue.substring(0, 4)} roku (zł)</th>
-            </tr>
+        <tr className="oneRow sortable">
+            <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
+            <th scope="col" onClick={() => this.sortBy('monthSummary')}>Koszt w {this.props.monthValue} (zł)</th>
+            <th scope="col" onClick={() => this.sortBy('yearSummary')}>Koszt
+                w {this.props.monthValue.substring(0, 4)} roku (zł)
+            </th>
+            <th>Pozycje</th>
+        </tr>
         </thead>
     );
 
     TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow clickable" key={item.id} onClick={() => this.onCategoryClick(item.id)}>
+        {this.state.isLoaded && this.state.data.map(item => (
+                <tr className="oneRow" key={item.id}>
                     <td>{item.name}</td>
                     <td>{formatCurrency(item.monthSummary)}</td>
                     <td>{formatCurrency(item.yearSummary)}</td>
+                    <td><FaList className="clickable" onClick={() => this.onCategoryClick(item.id)}/></td>
                 </tr>
             )
-            )}
+        )}
         </tbody>
     );
 
@@ -57,7 +63,7 @@ class Category extends Component {
     }
 
     loadData = month => {
-        axios.get(url.CATEGORY+`?month=${month}`)
+        axios.get(url.CATEGORY + `?month=${month}`)
             .then(response =>
                 this.setState({
                     data: response.data,
@@ -70,8 +76,8 @@ class Category extends Component {
             <div>
                 <NavigationTab onclick={this.loadData}/>
                 <Table striped>
-                    <this.TableHeader />
-                    <this.TableBody />
+                    <this.TableHeader/>
+                    <this.TableBody/>
                 </Table>
             </div>
         )
@@ -89,4 +95,4 @@ const mapDispatchToProps = ({
     setMonth,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps) (Category)
+export default connect(mapStateToProps, mapDispatchToProps)(Category)

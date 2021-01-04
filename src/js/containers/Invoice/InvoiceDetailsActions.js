@@ -1,6 +1,8 @@
 import React from 'react'
 import {Table} from 'reactstrap';
 import {formatCurrency} from '../../common/CurrencyFormat'
+import {FaList} from "react-icons/fa";
+
 const TableHeader = () => (
     <thead>
     <tr className="tableHeaderColumn">
@@ -9,6 +11,7 @@ const TableHeader = () => (
         <th scope="col">Cena jednostkowa</th>
         <th scope="col">Rabat</th>
         <th scope="col">Suma</th>
+        <th scope="col">Historia</th>
     </tr>
     </thead>
 );
@@ -16,12 +19,13 @@ const TableHeader = () => (
 const TableBody = ({data, onItemClick}) => (
     <tbody>
     {data && data.map(item => (
-            <tr className="oneRow clickable" key={item.invoiceItemId} onClick={() => onItemClick(item)}>
+            <tr className="oneRow" key={item.invoiceItemId}>
                 <td>{item.productName}</td>
                 <td>{item.quantity}</td>
                 <td>{formatCurrency(item.price)}</td>
                 <td>{formatCurrency(item.discount)}</td>
                 <td>{formatCurrency(item.totalPrice)}</td>
+                <td><FaList className="clickable" onClick={() => onItemClick(item)}/></td>
             </tr>
         )
     )}

@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { BASE_URL } from '../../common/ulrs'
-import { Table} from 'reactstrap';
+import React, {Component} from 'react'
+import {BASE_URL} from '../../common/ulrs'
+import {Table} from 'reactstrap';
 import sorter from '../../common/Util/Sort'
 import {connect} from 'react-redux';
-import { setMonth, setBudget } from '../../actions';
+import {setMonth, setBudget} from '../../actions';
 import NavigationTab from '../../components/Navigation/NavigationTab'
 import {formatCurrency} from '../../common/CurrencyFormat'
-
+import {FaSearch} from 'react-icons/fa';
 
 
 class Shop extends Component {
@@ -16,7 +16,7 @@ class Shop extends Component {
         data: [],
     }
 
-    sortBy(key){
+    sortBy(key) {
         const {data, ascOrder} = this.state
         const sorted = sorter(key, data, ascOrder)
         this.setState({
@@ -27,24 +27,39 @@ class Shop extends Component {
 
     TableHeader = () => (
         <thead>
-            <tr className="oneRow sortable">
-                <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
-                <th scope="col" onClick={() => this.sortBy('monthSum')}>Wydane w {this.props.monthValue}</th>
-                <th scope="col" onClick={() => this.sortBy('yearSum')}>Wydane od poczatku {this.props.monthValue.substring(0, 4)} r.</th>
-            </tr>
+        <tr className="oneRow sortable">
+            <th scope="col" onClick={() => this.sortBy('name')}>Nazwa</th>
+            <th scope="col" onClick={() => this.sortBy('monthSum')}>Wydane w {this.props.monthValue}</th>
+            <th scope="col" onClick={() => this.sortBy('yearSum')}>Wydane od
+                poczatku {this.props.monthValue.substring(0, 4)} r.
+            </th>
+        </tr>
         </thead>
     );
 
     TableBody = () => (
         <tbody>
-            {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow clickable" key={item.shopId} >
-                    <td onClick={() => this.onShopClick(item)}>{item.name}</td>
-                    <td onClick={() => this.onShopMonthSpendClick(item)} >{formatCurrency(item.monthSum)}</td>
-                    <td onClick={() => this.onShopYearSpendClick(item)}>{formatCurrency(item.yearSum)}</td>
+        {this.state.isLoaded && this.state.data.map(item => (
+                <tr className="oneRow " key={item.shopId}>
+                    <td>
+                        <div className="rowIcon"><p>{item.name}</p>
+                            <FaSearch className="clickable"
+                                      onClick={() => this.onShopClick(item)}/></div>
+                    </td>
+                    <td>
+                        <div className="rowIcon">
+                            <p>{formatCurrency(item.monthSum)}</p>
+                            <FaSearch className="clickable" onClick={() => this.onShopMonthSpendClick(item)}/>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="rowIcon">
+                            <p>{formatCurrency(item.yearSum)}</p>
+                            <FaSearch className="clickable" onClick={() => this.onShopYearSpendClick(item)}/></div>
+                    </td>
                 </tr>
             )
-            )}
+        )}
         </tbody>
     );
 
@@ -66,11 +81,11 @@ class Shop extends Component {
 
     loadData = month => {
         fetch(BASE_URL + `shop?month=${month}`)
-        .then(response => response.json())
-        .then(data => this.setState({
-            data: data,
-            isLoaded: true
-        }))
+            .then(response => response.json())
+            .then(data => this.setState({
+                data: data,
+                isLoaded: true
+            }))
     }
 
     render() {
@@ -78,8 +93,8 @@ class Shop extends Component {
             <div>
                 <NavigationTab onclick={this.loadData}/>
                 <Table striped>
-                    <this.TableHeader />
-                    <this.TableBody />
+                    <this.TableHeader/>
+                    <this.TableBody/>
                 </Table>
             </div>
         )

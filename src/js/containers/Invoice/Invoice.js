@@ -5,6 +5,7 @@ import { setMonth } from '../../actions'
 import { Table } from 'reactstrap';
 import NavigationTab from '../../components/Navigation/NavigationTab'
 import {formatCurrency} from '../../common/CurrencyFormat'
+import {FaSearch} from 'react-icons/fa';
 
 
 
@@ -30,6 +31,7 @@ class Invoice extends Component {
                 <th scope="col">Data {this.props.monthValue}</th>
                 <th scope="col">Suma</th>
                 <th scope="col">Konto</th>
+                <th scope="col">Pozycje</th>
             </tr>
         </thead>
     );
@@ -37,11 +39,12 @@ class Invoice extends Component {
     TableBody = () => (
         <tbody>
             {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow clickable" key={item.listId} onClick={() => this.onItemClick(item)}>
+                <tr className="oneRow" key={item.listId} >
                     <td>{item.name}</td>
                     <td>{item.date}</td>
                     <td>{formatCurrency(item.price)}</td>
                     <td>{item.account}</td>
+                    <td><FaSearch className="clickable" onClick={() => this.onItemClick(item)}/></td>
                 </tr>
             )
             )}
