@@ -6,6 +6,7 @@ import * as url from '../../common/ulrs'
 import {connect} from 'react-redux'
 import {setMonth} from '../../actions';
 import {formatCurrency} from '../../common/CurrencyFormat'
+import {FaSearch} from "react-icons/fa";
 
 class AccountDetails extends Component {
 
@@ -28,13 +29,18 @@ class AccountDetails extends Component {
                 })).catch(err => console.log("error ", err))
     }
 
+    showAccountOperations(id) {
+        console.log("Check account oprations ", id)
+    }
+
     TableHeader = () => (
         <thead>
-        <tr className="oneRow sortable">
+        <tr className="oneRow">
             <th scope="col">Nazwa</th>
             <th scope="col">Stan konta (zł)</th>
             <th scope="col">Wydatki {this.props.monthValue} (zł)</th>
             <th scope="col">Przychody {this.props.monthValue} (zł)</th>
+            <th scope="col">Operacje</th>
         </tr>
         </thead>
     );
@@ -42,14 +48,23 @@ class AccountDetails extends Component {
     TableBody = props => (
         <tbody>
         {props.accounts.map(item => (
-                <tr className="oneRow clickable" key={item.id}>
+                <tr className="oneRow" key={item.id}>
                     <td>{item.name}</td>
                     <td>{formatCurrency(item.moneyAmount)}</td>
                     <td>{formatCurrency(item.expense)}</td>
                     <td>{formatCurrency(item.income)}</td>
+                    <td className="clickable"><FaSearch onClick={()=> this.showAccountOperations(item.id)}/></td>
                 </tr>
             )
-        )}
+        )
+        }
+        <tr className="oneRow tableSum">
+            <td>Suma</td>
+            <td>{formatCurrency(props.accounts.reduce((a, {moneyAmount}) => a + moneyAmount, 0))}</td>
+            <td>{formatCurrency(props.accounts.reduce((a, {expense}) => a + expense, 0))}</td>
+            <td>{formatCurrency(props.accounts.reduce((a, {income}) => a + income, 0))}</td>
+            <td>-</td>
+        </tr>
         </tbody>
     );
 

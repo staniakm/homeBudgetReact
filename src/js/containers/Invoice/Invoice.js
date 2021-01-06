@@ -52,8 +52,8 @@ class Invoice extends Component {
     );
 
     onItemClick = (item) => {
-        window.location.assign(`/invoice/${item.listId}`)
-        // this.props.history.push(`/invoice/${item.listId}`)
+        // window.location.assign(`/invoice/${item.listId}`)
+        this.props.history.push(`/invoice/${item.listId}`)
     }
 
     componentDidMount() {
