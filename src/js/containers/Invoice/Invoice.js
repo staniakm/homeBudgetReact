@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as url from '../../common/ulrs'
-import { connect } from 'react-redux';
-import { setMonth } from '../../actions'
-import { Table } from 'reactstrap';
+import {connect} from 'react-redux';
+import {setMonth} from '../../actions'
 import NavigationTab from '../../components/Navigation/NavigationTab'
-import {formatCurrency} from '../../common/CurrencyFormat'
-import {FaSearch} from 'react-icons/fa';
-
+import {InvoiceList} from "./InvoiceList";
 
 
 class Invoice extends Component {
@@ -24,50 +21,22 @@ class Invoice extends Component {
             }))
     }
 
-    TableHeader = () => (
-        <thead>
-            <tr className="tableHeaderColumn oneRow">
-                <th scope="col">Sklep</th>
-                <th scope="col">Data {this.props.monthValue}</th>
-                <th scope="col">Suma</th>
-                <th scope="col">Konto</th>
-                <th scope="col">Pozycje</th>
-            </tr>
-        </thead>
-    );
-
-    TableBody = () => (
-        <tbody>
-            {this.state.isLoaded && this.state.data.map(item => (
-                <tr className="oneRow" key={item.listId} >
-                    <td>{item.name}</td>
-                    <td>{item.date}</td>
-                    <td>{formatCurrency(item.price)}</td>
-                    <td>{item.account}</td>
-                    <td><FaSearch className="clickable" onClick={() => this.onItemClick(item)}/></td>
-                </tr>
-            )
-            )}
-        </tbody>
-    );
-
-    onItemClick = (item) => {
-        // window.location.assign(`/invoice/${item.listId}`)
-        this.props.history.push(`/invoice/${item.listId}`)
-    }
-
     componentDidMount() {
         this.loadData(this.props.month)
     }
 
     render() {
+        if (!this.state.isLoaded) {
+            return (<div>Loading..</div>)
+        }
         return (
             <div>
                 <NavigationTab onclick={this.loadData}/>
-                <Table striped>
-                    <this.TableHeader />
-                    <this.TableBody />
-                </Table>
+                {this.state.isLoaded &&
+                <InvoiceList
+                    data={this.state.data}
+                    month={this.props.monthValue}
+                />}
             </div>
         )
     }
