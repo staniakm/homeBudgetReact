@@ -13,7 +13,7 @@ export const InvoiceList = ({data, month}) => {
 
     function TableBody({data}) {
         return <tbody>
-        {data && data.map(item => (
+        {data && data.map(item  => (
                 <tr className="oneRow" key={item.listId}>
                     <td>{item.name}</td>
                     <td>{item.date}</td>
