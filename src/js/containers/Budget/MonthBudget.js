@@ -73,7 +73,7 @@ class MonthBudget extends Component {
     }
 
     updateValue = (e) => {
-        var category = this.state.categoryPlanned;
+        const category = this.state.categoryPlanned;
         category.planned = e.target.value;
         this.setState({
             categoryPlanned: category,

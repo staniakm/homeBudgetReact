@@ -75,6 +75,11 @@ thead {
 .clickable {
   cursor: pointer;  
 }
+
+span + span {
+  margin-left: 10px;
+}
+
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
