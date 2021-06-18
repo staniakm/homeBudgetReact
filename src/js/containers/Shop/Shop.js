@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {BASE_URL} from '../../common/ulrs'
+import {SHOP} from '../../common/ulrs'
 import {Table} from 'reactstrap';
 import sorter from '../../common/Util/Sort'
 import {connect} from 'react-redux';
-import {setMonth, setBudget} from '../../actions';
+import {setBudget, setMonth} from '../../actions';
 import NavigationTab from '../../components/Navigation/NavigationTab'
 import {formatCurrency} from '../../common/CurrencyFormat'
 import {FaSearch} from 'react-icons/fa';
@@ -72,7 +72,7 @@ class Shop extends Component {
     }
 
     onShopYearSpendClick = (shop) => {
-        this.props.history.push(`/shop/${shop.shopId}/year`)
+        this.props.history.push(`shop/${shop.shopId}/year`)
     }
 
     componentDidMount() {
@@ -80,7 +80,7 @@ class Shop extends Component {
     }
 
     loadData = month => {
-        fetch(BASE_URL + `shop?month=${month}`)
+        fetch(SHOP + `?month=${month}`)
             .then(response => response.json())
             .then(data => this.setState({
                 data: data,
